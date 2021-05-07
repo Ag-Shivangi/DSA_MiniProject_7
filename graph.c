@@ -46,3 +46,44 @@ void PrintGraph(Graph g){
 	}
 }
 
+int* DjikstraAlgo(Graph g, GraphNode ref){
+	PQueue internal;
+	internal = InitializePQueue();
+
+	int* distance = malloc(g.numVertices*sizeof(int));
+
+	for(int i=0;i<g.numVertices;i++)
+		distance[i] = 1000000000;
+	
+	distance[ref.vertexID] = 0;
+
+	for(int i=0;i<ref.numEdges;i++){
+		distance[ref.parent[i]] = ref.EdgeLen[i];
+		EnquePQueue(internal, ref.vertexID, ref.parent[i], ref.EdgeLen[i]);
+	}
+
+	while(internal->maxIndex>0){
+		Touple temp = PopMin(internal);
+
+		int vertex, currdist;
+
+		vertex = temp.b;
+		currdist = temp.keyvalue;
+
+		g.visitedDFS[vertex] = 1;
+		for(int i=0;i<g.Head[vertex].numEdges;i++){
+			if(g.visitedDFS[g.Head[vertex].parent[i]]!=0)
+				continue;
+
+			int dist = currdist + g.Head[vertex].EdgeLen[i];
+
+			if(dist<distance[g.Head[vertex].parent[i]]){
+				distance[g.Head[vertex].parent[i]] = dist;
+				EnquePQueue(internal, vertex, g.Head[vertex].parent[i], dist);
+			}
+		}		
+	}
+	free(internal->arr);
+	free(internal);
+	return distance;
+}
