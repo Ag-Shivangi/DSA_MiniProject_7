@@ -1,22 +1,22 @@
 #include <stdio.h>
 #include <stdlib.h>
-typedef struct node
+typedef struct stack
 {
     struct node *next;
     int data;
-} node;
-void push(node *alpha, int data)
+} stack;
+void push(stack *alpha, int data)
 {
-    node *temp = (node *)malloc(sizeof(node));
+    stack *temp = (stack *)malloc(sizeof(stack));
     temp->data = data;
     temp->next = NULL;
     alpha = temp;
 }
-int pop(node *alpha)
+int pop(stack *alpha)
 {
     if(alpha=NULL)
     return -1;
-    node *temp = alpha;
+    stack *temp = alpha;
     int ans=temp->data;
     alpha = alpha->next;
     free(temp);
