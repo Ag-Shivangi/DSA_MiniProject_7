@@ -222,5 +222,6 @@ void LookUpUser(Graph g,int currID ,int userID){
 	if(check!=INT_MAX)
 		printf("%d is a %d degree friend\n", userID, check);
 		
-
+	printf("Name of user : %s", g.Head[userID].name);
+	printf("City of location of user: %s", g.Head[userID].city);
 }
