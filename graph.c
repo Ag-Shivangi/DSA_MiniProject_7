@@ -30,7 +30,7 @@ void StartFollowing(Graph g, int v1, int v2){	//v1 starts following v2
 		g.Head[v1].parent = (int*)realloc(g.Head[v1].parent ,g.Head[v1].maxSize*sizeof(int));
 		g.Head[v1].EdgeLen = (int*)realloc(g.Head[v1].EdgeLen ,g.Head[v1].maxSize*sizeof(int));
 	}
-
+    
 	g.Head[v1].parent[g.Head[v1].numEdges] = v2;
 	g.Head[v1].EdgeLen[g.Head[v1].numEdges] = 1;
 	g.Head[v1].numEdges++;

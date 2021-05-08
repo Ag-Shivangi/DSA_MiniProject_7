@@ -1,8 +1,9 @@
 #include "struct.h"
+#include "functions.c"
 int main()
 {
     int n=256,user_choice,user_count=0;  //n=size of the user array(preferably a power of 2) 
-    //Graph graph = CreateGraph(n);
+    Graph graph = CreateGraph(n);
     printf("\n  BONJOUR! WELCOME TO THE FRIENDS RECCOMENDATION SYSTEM \n\n");
     do
     {
@@ -15,7 +16,7 @@ int main()
         {
             case 1:
                 user_count++;
-                //create_user(graph);
+                create_user(graph);
                 break;
             case 2:            
                 break; 

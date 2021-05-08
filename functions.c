@@ -1,11 +1,6 @@
 #include "struct.h"
 array_hobby list_hobbies[8]; //stores hobby names
 stack *next_id;
-void initialise() //all initalisation goes here
-{
-	push(&next_id, 0);
-	init_hobby();
-}
 Graph CreateGraph(int size) //Creates the intial graph
 {
 	Graph resultGraph;
@@ -53,6 +48,24 @@ void StartFollowing(Graph g, int v1, int v2)
 	g.Head[v2].follower[g.Head[v2].no_followers] = v1;
 	g.Head[v2].no_followers++;
 }
+
+void resize_grpah(Graph* g){
+	int temp = g->numVertices;
+	g->numVertices*=2;
+	g->Head = realloc(g->numVertices*sizeof(GraphNode),);
+
+
+	for(int i=temp;i<g->numVertices;i++){
+		g->Head[i].numEdges = 0;
+		g->Head[i].maxSize = 1;
+		g->Head[i].parent = (int*)malloc(sizeof(int));
+		g->Head[i].EdgeLen = (int*)malloc(sizeof(int));
+		
+		g->Head[i].no_followers = 0;
+		g->Head[i].maxSize_follower = 1;
+		g->Head[i].follower = (int*)malloc(sizeof(int));		
+	}
+}
 void choose_hobby(int a) //function which genereates a boolean string in int form of the hobbies choosen                        
 {
 	a = 0;
@@ -84,7 +97,7 @@ void create_user(Graph g) //reads and stores the data of the user
 	scanf("%s", g.Head[id].name);
 	printf("Enter your city : \n");
 	scanf("%s", g.Head[id].city);
-	printf("Enter you birthday (format: dd/mm/yyyy): \n");
+	printf("Enter you birthday (format: dd/mm/yyyy): \n");	
 	scanf("%d/%d/%d", &g.Head[id].date, &g.Head[id].month, &g.Head[id].year);
 	printf("Enter you choice of hobbies (x,y,z):\n");
 	printf("1) Painting\n");
@@ -110,60 +123,76 @@ void init_hobby() //initialises the hobbies in the database
 }
 void hobby_recommend(Graph g, int id)
 {
-
 	
 }
-bfs(Graph g, int begin, int array[])
+
+int bfs(Graph g, int begin, int* arr)
 {
-	int n = 0; //keeps a count od t
+<<<<<<< HEAD
+	int n = 0; //keeps a count of number
+=======
+    int n = 0;
+>>>>>>> e5044c97085899fab27cc45cc9603b5e9ce0accf
 
-	int x = g.numVertices; //number of vertices
+    int x = g.numVertices;
 
-	int visited[x];
+    int visited[x];
+    int adjvisited[x];
 
-	for (int i = 0; i < x; i++)
-	{
-		visited[i] = 0;
-	}
-	GraphNode temp = g.Head[begin];
+    for(int i = 0; i < x; i++)
+    {
+        visited[i] = 0;
+    }
 
-	int t = temp.numEdges;
+    PtrQueue q = CreateQueue();
+
+    Enqueue(q, begin);
+
+    GraphNode temp = g.Head[begin];
+
+    int t = temp.numEdges;
+
 	int l = t;
+
 	while (t != 0)
 	{
 		int adjacent = temp.parent[l - t];
-		visited[adjacent] =1;		
+		adjvisited[adjacent] = 1;		
 		t--;
 	}
-	PtrQueue q = CreateQueue();
 
-	Enqueue(q, begin);
+    adjvisited[begin] = 1;
 
-	while (IsEmpty(q) != 1 && n <= 10)
-	{
-		int top = Dequeue(q);
+    while(IsEmpty(q) != 1 && n <= 10)
+    {
+        int top = Dequeue(q);
 
-		visited[top] = 1;
+        visited[top] = 1;
 
-		n++;
+        if(adjvisited[top] != 1)
+        {
+            arr[n] = top;
+            n++;
+        }
 
-		GraphNode temp = g.Head[top];
+        GraphNode x = g.Head[top];
 
-		int t = temp.numEdges;
-		int l = t;
+        int t = x.numEdges;
+        int l = t;
 
-		while (t != 0)
-		{
-			int adjacent = temp.parent[l - t];
+        while(t != 0)
+        {
+            int adjacent = x.parent[l - t];
 
-			if (visited[adjacent] == 0)
-			{
-				visited[adjacent] = -1;
-				Enqueue(q, adjacent);
-			}
-			t--;
-		}
-	}
+            if(visited[adjacent] == 0)
+            {
+                visited[adjacent] = -1;
+                Enqueue(q, adjacent);
+            }
+            t--;
+        }
+    }
+    return n;
 }
 
 void recommendations(Graph g, int id)//function that returns the recommended friends
@@ -178,11 +207,12 @@ void recommendations(Graph g, int id)//function that returns the recommended fri
 	printf("Your friend suggestions are :\n");
 	fo(i,10)
 	{ 
-		printf("%d) %s\nId: %d\n",i+1,g.Head[friends[i]],friends[i]);
+		printf("%d) %s\nId: %d\n",i+1,g.Head[friends[i]].name,friends[i]);
 	}
 }
 void display_details()
 {
+
 }
 void update_details()
 {
@@ -191,8 +221,14 @@ void friendship_status()
 {
 
 }
-int main()
+void initialise() //all initalisation goes here
 {
-	Graph alpha;
-	alpha = CreateGraph(10);
+	push(&next_id, 0);
+	init_hobby();
+	
 }
+// int main()
+// {
+// 	Graph alpha;
+// 	alpha = CreateGraph(10);
+// }
