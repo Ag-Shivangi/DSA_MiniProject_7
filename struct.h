@@ -9,8 +9,7 @@
 #include <limits.h>
 #include <unistd.h>
 #include <crypt.h>
-#include "stack.h"
-#include "bfs.h"
+#include "header.h"
 #include "graph.h"
 
 // #include "graph.c"

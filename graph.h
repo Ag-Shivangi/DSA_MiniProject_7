@@ -23,7 +23,7 @@ typedef struct GraphNode
 	int month;
 	int year;
 	//add user hobby
-	int hobbies; //boolen srting in int form
+	int hobbies[8]; //boolen srting in int form
 				 //int no_following;
 				 //int *following;
 

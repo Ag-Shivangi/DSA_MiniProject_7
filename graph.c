@@ -1,5 +1,5 @@
 #include "graph.h"
-#include "priority_queue.h"
+#include "header.h"
 
 Graph CreateGraph(int size){//Creates the intial graph
 	Graph resultGraph;
