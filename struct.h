@@ -7,6 +7,8 @@
 #include <math.h>
 #include <ctype.h>
 #include <limits.h>
+#include <unistd.h>
+#include <crypt.h>
 #include "stack.c"
 #include "graph.h"
 #include "graph.c"
@@ -18,22 +20,34 @@ typedef struct array_hobby
 {
     char hobby[25];
 } array_hobby;
-array_hobby list_hobbies[8]; //stores hobby names
-struct user
+typedef struct ActualGraph
 {
+    struct GraphNode *Head;
+    int numVertices;
+    int *visitedDFS;
+}Graph;
+typedef struct GraphNode
+{
+    int vertexID;
+    int *parent; //array containing people it's following ig.
+    int *EdgeLen;
+    int numEdges; //number of the people it's follwing.
+    int maxSize;  //current allocatedd maximum size of the parent arr
+    //apologies for the confusion caused in the naming
+    int no_followers;
+    int *follower; //self explanatory i think
+    int maxSize_follower;
     char name[30];
     char city[30];
-    char password[21];
+   char password[35];
     //birthday details
     int date;
     int month;
     int year;
-    //add user hobby
+
     char hobbies[10]; //boolean string
-    int no_followers;
-    int *follower;
-    int no_following;
-    int *following;
-};
-typedef struct user User;
+    //int no_following;
+    //int *following;
+
+} GraphNode;
 #endif
