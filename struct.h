@@ -10,6 +10,7 @@
 #include <unistd.h>
 #include <crypt.h>
 #include "stack.c"
+#include "bfs.h"
 // #include "graph.h"
 // #include "graph.c"
 #define fo(i, n) for (int i = 0; i < n; i++)
@@ -23,7 +24,7 @@ typedef struct array_hobby
 typedef struct ActualGraph
 {
     struct GraphNode *Head;
-    int numVertices;
+    int *numVertices;
     int *visitedDFS;
 }Graph;
 typedef struct GraphNode

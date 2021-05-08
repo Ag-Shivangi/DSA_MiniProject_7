@@ -53,8 +53,7 @@ void StartFollowing(Graph g, int v1, int v2)
 	g.Head[v2].follower[g.Head[v2].no_followers] = v1;
 	g.Head[v2].no_followers++;
 }
-void choose_hobby(int a) //function which genereates a boolean string in int form \
-                        of the hobbies choosen
+void choose_hobby(int a) //function which genereates a boolean string in int form of the hobbies choosen                        
 {
 	a = 0;
 	int count[8] = {};
@@ -78,6 +77,7 @@ void create_user(Graph g) //reads and stores the data of the user
 	int id = pop(&next_id);
 	if (id == -1)
 	{
+		resize_graph(&g);
 	}
 	push(&next_id, id + 1);
 	printf("Enter you name : \n");
@@ -108,12 +108,68 @@ void init_hobby() //initialises the hobbies in the database
 	strcpy(list_hobbies[6].hobby, "Anime");
 	strcpy(list_hobbies[7].hobby, "Programming");
 }
+void hobby_recommend();
+bfs(Graph g, int begin, int array[])
+{
+	int n = 0; //keeps a count od t
+
+	int x = *(g.numVertices); //number of vertices
+
+	int visited[x];
+
+	for (int i = 0; i < x; i++)
+	{
+		visited[i] = 0;
+	}
+	GraphNode temp = g.Head[begin];
+
+	int t = temp.numEdges;
+	int l = t;
+	while (t != 0)
+	{
+		int adjacent = temp.parent[l - t];
+		visited[adjacent] =1;		
+		t--;
+	}
+	PtrQueue q = CreateQueue();
+
+	Enqueue(q, begin);
+
+	while (IsEmpty(q) != 1 && n <= 10)
+	{
+		int top = Dequeue(q);
+
+		visited[top] = 1;
+
+		n++;
+
+		GraphNode temp = g.Head[top];
+
+		int t = temp.numEdges;
+		int l = t;
+
+		while (t != 0)
+		{
+			int adjacent = temp.parent[l - t];
+
+			if (visited[adjacent] == 0)
+			{
+				visited[adjacent] = -1;
+				Enqueue(q, adjacent);
+			}
+			t--;
+		}
+	}
+}
+
 void recommendations(Graph g, int id)
 {
+	int friends[10];
 	if (g.Head[id].numEdges == 0)
 	{
-		
+        hobby_recommend(g,id);
 	}
+	
 }
 void display_details()
 {
@@ -124,5 +180,5 @@ void update_details()
 int main()
 {
 	Graph alpha;
-	alpha=CreateGraph(10);
+	alpha = CreateGraph(10);
 }
