@@ -15,12 +15,37 @@ Graph CreateGraph(int size){
 		resultGraph.Head[i].maxSize = 1;
 		resultGraph.Head[i].parent = (int*)malloc(sizeof(int));
 		resultGraph.Head[i].EdgeLen = (int*)malloc(sizeof(int));
+		
+		resultGraph.Head[i].no_followers = 0;
+		resultGraph.Head[i].maxSize_follower = 1;
+		resultGraph.Head[i].follower = (int*)malloc(sizeof(int));
 		//resultGraph.Head[i].vertexID = i;
 	}
 	
 	return resultGraph;
 }
 
+void StartFollowing(Graph g, int v1, int v2){	//v1 starts following v2
+	if(g.Head[v1].maxSize == g.Head[v1].numEdges ){
+		g.Head[v1].maxSize *= 2;
+		g.Head[v1].parent = (int*)realloc(g.Head[v1].parent ,g.Head[v1].maxSize*sizeof(int));
+		g.Head[v1].EdgeLen = (int*)realloc(g.Head[v1].EdgeLen ,g.Head[v1].maxSize*sizeof(int));
+	}
+
+	g.Head[v1].parent[g.Head[v1].numEdges] = v2;
+	g.Head[v1].EdgeLen[g.Head[v1].numEdges] = 1;
+	g.Head[v1].numEdges++;
+
+	if(g.Head[v2].maxSize_follower == g.Head[v2].no_followers ){
+		g.Head[v2].maxSize_follower *= 2;
+		g.Head[v2].follower = (int*)realloc(g.Head[v1].follower ,g.Head[v1].maxSize_follower*sizeof(int));
+		//g.Head[v1].EdgeLen = (int*)realloc(g.Head[v1].EdgeLen ,g.Head[v1].maxSize*sizeof(int));
+	}	
+
+	g.Head[v2].follower[g.Head[v2].no_followers] = v1;
+	g.Head[v2].no_followers++;
+
+}
 void CreateEdge(Graph g, int v1, int v2, int edgelen){
 	
 	if(g.Head[v1].maxSize == g.Head[v1].numEdges ){
