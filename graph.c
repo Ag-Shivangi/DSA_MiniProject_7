@@ -143,3 +143,22 @@ void DeleteVertex(Graph g, int vertex){
 	g.Head[vertex].EdgeLen = (int*)malloc(sizeof(int));
 
 }
+
+
+void resize_grpah(Graph* g){
+	int temp = g->numVertices;
+	g->numVertices*=2;
+	g->Head = realloc(g->numVertices*sizeof(GraphNode));
+
+
+	for(int i=temp;i<g->numVertices;i++){
+		g->Head[i].numEdges = 0;
+		g->Head[i].maxSize = 1;
+		g->Head[i].parent = (int*)malloc(sizeof(int));
+		g->Head[i].EdgeLen = (int*)malloc(sizeof(int));
+		
+		g->Head[i].no_followers = 0;
+		g->Head[i].maxSize_follower = 1;
+		g->Head[i].follower = (int*)malloc(sizeof(int));		
+	}
+}
