@@ -1,6 +1,13 @@
+#ifndef __GRAPHS
+#define __GRAPHS
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdbool.h>
+#include <math.h>
+#include <ctype.h>
+#include <limits.h>
+#include "stack.c"
 struct user
 {
     char name[30];
@@ -10,10 +17,11 @@ struct user
     int date;
     int month;
     int year;
-    //add user hobby 
+    //add user hobby
     int no_followers;
-    int * follower;
+    int *follower;
     int no_following;
-    int * following;
+    int *following;
 };
 typedef struct user User;
+#endif

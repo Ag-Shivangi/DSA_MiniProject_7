@@ -12,13 +12,13 @@ void push(node *alpha, int data)
     temp->next = NULL;
     alpha = temp;
 }
-void pop(node *alpha)
+int pop(node *alpha)
 {
-
-    if (alpha != NULL)
-    {
-        node *temp = alpha;
-        alpha = alpha->next;
-        free(temp);
-    }
+    if(alpha=NULL)
+    return -1;
+    node *temp = alpha;
+    int ans=temp->data;
+    alpha = alpha->next;
+    free(temp);
+    return ans;
 }
