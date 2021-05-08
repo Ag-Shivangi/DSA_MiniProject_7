@@ -113,57 +113,70 @@ void hobby_recommend(Graph g, int id)
 
 	
 }
-bfs(Graph g, int begin, int array[])
+
+int bfs(Graph g, int begin, int* arr)
 {
-	int n = 0; //keeps a count od t
+    int n = 0;
 
-	int x = g.numVertices; //number of vertices
+    int x = g.numVertices;
 
-	int visited[x];
+    int visited[x];
+    int adjvisited[x];
 
-	for (int i = 0; i < x; i++)
-	{
-		visited[i] = 0;
-	}
-	GraphNode temp = g.Head[begin];
+    for(int i = 0; i < x; i++)
+    {
+        visited[i] = 0;
+    }
 
-	int t = temp.numEdges;
+    PtrQueue q = CreateQueue();
+
+    Enqueue(q, begin);
+
+    GraphNode temp = g.Head[begin];
+
+    int t = temp.numEdges;
+
 	int l = t;
+
 	while (t != 0)
 	{
 		int adjacent = temp.parent[l - t];
-		visited[adjacent] =1;		
+		adjvisited[adjacent] = 1;		
 		t--;
 	}
-	PtrQueue q = CreateQueue();
 
-	Enqueue(q, begin);
+    adjvisited[begin] = 1;
 
-	while (IsEmpty(q) != 1 && n <= 10)
-	{
-		int top = Dequeue(q);
+    while(IsEmpty(q) != 1 && n <= 10)
+    {
+        int top = Dequeue(q);
 
-		visited[top] = 1;
+        visited[top] = 1;
 
-		n++;
+        if(adjvisited[top] != 1)
+        {
+            arr[n] = top;
+            n++;
+        }
 
-		GraphNode temp = g.Head[top];
+        GraphNode x = g.Head[top];
 
-		int t = temp.numEdges;
-		int l = t;
+        int t = x.numEdges;
+        int l = t;
 
-		while (t != 0)
-		{
-			int adjacent = temp.parent[l - t];
+        while(t != 0)
+        {
+            int adjacent = x.parent[l - t];
 
-			if (visited[adjacent] == 0)
-			{
-				visited[adjacent] = -1;
-				Enqueue(q, adjacent);
-			}
-			t--;
-		}
-	}
+            if(visited[adjacent] == 0)
+            {
+                visited[adjacent] = -1;
+                Enqueue(q, adjacent);
+            }
+            t--;
+        }
+    }
+    return n;
 }
 
 void recommendations(Graph g, int id)//function that returns the recommended friends
