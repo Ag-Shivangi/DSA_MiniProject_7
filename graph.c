@@ -146,7 +146,57 @@ void DeleteVertex(Graph g, int vertex){
 }
 
 
-void resize_grpah(Graph* g){
+int DjikstraAlgoModified(Graph g, GraphNode ref, int userID){
+	PQueue internal;
+	internal = InitializePQueue();
+
+	int* distance = malloc(g.numVertices*sizeof(int));
+
+	for(int i=0;i<g.numVertices;i++)
+		distance[i] = INT_MAX;
+	
+	distance[ref.vertexID] = 0;
+
+	for(int i=0;i<ref.numEdges;i++){
+		distance[ref.parent[i]] = ref.EdgeLen[i];
+		EnquePQueue(internal, ref.vertexID, ref.parent[i], ref.EdgeLen[i]);
+	}
+
+	while(internal->maxIndex>0){
+		Touple temp = PopMin(internal);
+
+		int vertex, currdist;
+
+		vertex = temp.b;
+		currdist = temp.keyvalue;
+
+		g.visitedDFS[vertex] = 1;
+
+		if(vertex == userID){
+			free(internal->arr);
+			free(internal);
+			return distance[userID];
+		}
+		for(int i=0;i<g.Head[vertex].numEdges;i++){
+			if(g.visitedDFS[g.Head[vertex].parent[i]]!=0)
+				continue;
+
+			int dist = currdist + g.Head[vertex].EdgeLen[i];
+
+			if(dist<distance[g.Head[vertex].parent[i]]){
+				distance[g.Head[vertex].parent[i]] = dist;
+				EnquePQueue(internal, vertex, g.Head[vertex].parent[i], dist);
+			}
+		}		
+	}
+	free(internal->arr);
+	free(internal);
+	return INT_MAX;
+}
+
+
+
+void resize_graph(Graph* g){
 	int temp = g->numVertices;
 	g->numVertices*=2;
 	g->Head = realloc(g->Head, g->numVertices*sizeof(GraphNode));
@@ -163,4 +213,14 @@ void resize_grpah(Graph* g){
 		g->Head[i].maxSize_follower = 1;
 		g->Head[i].follower = (int*)malloc(sizeof(int));		
 	}
+}
+
+void LookUpUser(Graph g,int currID ,int userID){
+
+	int check = DjikstraAlgoModified(g, g.Head[currID], userID);
+
+	if(check!=INT_MAX)
+		printf("%d is a %d degree friend\n", userID, check);
+		
+
 }
