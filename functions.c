@@ -212,9 +212,10 @@ void recommendations(Graph g, int id)//function that returns the recommended fri
 		printf("%d) %s\nId: %d\n",i+1,g.Head[friends[i]].name,friends[i]);
 	}
 }
-void display_details()
+void display_details(Graph g, int userID)
 {
-   
+	printf("Name is %s", g.Head[userID].name);
+	printf("City of location of user: %s", g.Head[userID].city);
 }
 void update_details()
 {
