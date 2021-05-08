@@ -42,6 +42,7 @@ void PrintGraph(Graph g);
 int* DjikstraAlgo(Graph g, GraphNode ref);
 void DeleteVertex(Graph g, int vertex);
 void resize_graph(Graph* g);
+void LookUpUser(Graph g,int currID ,int userID);
 
 #endif
 
