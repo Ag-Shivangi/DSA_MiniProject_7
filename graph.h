@@ -1,50 +1,48 @@
 #ifndef _GRAPH_STUFF_
 #define _GRAPH_STUFF_
-
+#include <limits.h>
 #include <stdio.h>
 #include <stdlib.h>
-typedef struct GraphNode {
+typedef struct GraphNode
+{
 	int vertexID;
 	int *parent; //array containing people it's following ig.
-	int *EdgeLen; 
+	int *EdgeLen;
 	int numEdges; //number of the people it's follwing.
-	int maxSize; //current allocatedd maximum size of the parent arr
+	int maxSize;  //current allocatedd maximum size of the parent arr
 	//apologies for the confusion caused in the naming
 	int no_followers;
-    int *follower; //self explanatory i think
+	int *follower; //self explanatory i think
 	int maxSize_follower;
 
-
 	char name[30];
-    char city[30];
-    char password[21];
-    //birthday details
-    int date;
-    int month;
-    int year;
-    //add user hobby
- int hobbies; //boolen srting in int form
-    //int no_following;
-    //int *following;
+	char city[30];
+	char password[21];
+	//birthday details
+	int date;
+	int month;
+	int year;
+	//add user hobby
+	int hobbies; //boolen srting in int form
+				 //int no_following;
+				 //int *following;
 
 	int userExistence;
 } GraphNode;
 
-typedef struct ActualGraph {
+typedef struct ActualGraph
+{
 	struct GraphNode *Head;
 	int numVertices;
 	int *visitedDFS;
-}	Graph;
+} Graph;
 
 Graph CreateGraph(int size);
 void CreateEdge(Graph g, int v1, int v2, int edgelen);
 void PrintGraph(Graph g);
-int* DjikstraAlgo(Graph g, GraphNode ref);
+int *DjikstraAlgo(Graph g, GraphNode ref);
 void DeleteVertex(Graph g, int vertex);
-void resize_graph(Graph* g);
-void LookUpUser(Graph g,int currID ,int userID);
+void resize_graph(Graph *g);
+void LookUpUser(Graph g, int currID, int userID);
 
 #endif
-
-
-

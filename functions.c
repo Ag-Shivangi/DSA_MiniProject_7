@@ -2,72 +2,72 @@
 #include "struct.h"
 array_hobby list_hobbies[8]; //stores hobby names
 stack *next_id;
-Graph CreateGraph(int size) //Creates the intial graph
-{
-	Graph resultGraph;
+// Graph CreateGraph(int size) //Creates the intial graph
+// {
+// 	Graph resultGraph;
 
-	resultGraph.numVertices = size;
-	resultGraph.Head = (GraphNode *)malloc(size * sizeof(GraphNode));
-	resultGraph.visitedDFS = (int *)calloc(resultGraph.numVertices, sizeof(int));
+// 	resultGraph.numVertices = size;
+// 	resultGraph.Head = (GraphNode *)malloc(size * sizeof(GraphNode));
+// 	resultGraph.visitedDFS = (int *)calloc(resultGraph.numVertices, sizeof(int));
 
-	for (int i = 0; i < size; i++)
-	{
-		resultGraph.Head[i].numEdges = 0;
-		resultGraph.Head[i].maxSize = 10;
-		resultGraph.Head[i].parent = (int *)malloc(1 * sizeof(int));
-		resultGraph.Head[i].EdgeLen = (int *)malloc(sizeof(int));
+// 	for (int i = 0; i < size; i++)
+// 	{
+// 		resultGraph.Head[i].numEdges = 0;
+// 		resultGraph.Head[i].maxSize = 10;
+// 		resultGraph.Head[i].parent = (int *)malloc(1 * sizeof(int));
+// 		resultGraph.Head[i].EdgeLen = (int *)malloc(sizeof(int));
 
-		resultGraph.Head[i].no_followers = 0;
-		resultGraph.Head[i].maxSize_follower = 1;
-		resultGraph.Head[i].follower = (int *)malloc(sizeof(int));
-		//resultGraph.Head[i].vertexID = i;
-	}
+// 		resultGraph.Head[i].no_followers = 0;
+// 		resultGraph.Head[i].maxSize_follower = 1;
+// 		resultGraph.Head[i].follower = (int *)malloc(sizeof(int));
+// 		//resultGraph.Head[i].vertexID = i;
+// 	}
 
-	return resultGraph;
-}
-void StartFollowing(Graph g, int v1, int v2)
-{												   //v1 starts following v2
-	if (g.Head[v1].maxSize == g.Head[v1].numEdges) //resizes the array of parent if the size exceeds
-	{
-		g.Head[v1].maxSize *= 2;
-		g.Head[v1].parent = (int *)realloc(g.Head[v1].parent, g.Head[v1].maxSize * sizeof(int));
-		g.Head[v1].EdgeLen = (int *)realloc(g.Head[v1].EdgeLen, g.Head[v1].maxSize * sizeof(int));
-	}
+// 	return resultGraph;
+// }
+// void StartFollowing(Graph g, int v1, int v2)
+// {												   //v1 starts following v2
+// 	if (g.Head[v1].maxSize == g.Head[v1].numEdges) //resizes the array of parent if the size exceeds
+// 	{
+// 		g.Head[v1].maxSize *= 2;
+// 		g.Head[v1].parent = (int *)realloc(g.Head[v1].parent, g.Head[v1].maxSize * sizeof(int));
+// 		g.Head[v1].EdgeLen = (int *)realloc(g.Head[v1].EdgeLen, g.Head[v1].maxSize * sizeof(int));
+// 	}
 
-	g.Head[v1].parent[g.Head[v1].numEdges] = v2; //adding to the parent list
-	g.Head[v1].EdgeLen[g.Head[v1].numEdges] = 1;
-	g.Head[v1].numEdges++;
+// 	g.Head[v1].parent[g.Head[v1].numEdges] = v2; //adding to the parent list
+// 	g.Head[v1].EdgeLen[g.Head[v1].numEdges] = 1;
+// 	g.Head[v1].numEdges++;
 
-	if (g.Head[v2].maxSize_follower == g.Head[v2].no_followers) //updating the followers list of v2\
-	                                                            and resizing the array
-	{
-		g.Head[v2].maxSize_follower *= 2;
-		g.Head[v2].follower = (int *)realloc(g.Head[v1].follower, g.Head[v1].maxSize_follower * sizeof(int));
-		//g.Head[v1].EdgeLen = (int*)realloc(g.Head[v1].EdgeLen ,g.Head[v1].maxSize*sizeof(int));
-	}
+// 	if (g.Head[v2].maxSize_follower == g.Head[v2].no_followers) //updating the followers list of v2\
+// 	                                                            and resizing the array
+// 	{
+// 		g.Head[v2].maxSize_follower *= 2;
+// 		g.Head[v2].follower = (int *)realloc(g.Head[v1].follower, g.Head[v1].maxSize_follower * sizeof(int));
+// 		//g.Head[v1].EdgeLen = (int*)realloc(g.Head[v1].EdgeLen ,g.Head[v1].maxSize*sizeof(int));
+// 	}
 
-	g.Head[v2].follower[g.Head[v2].no_followers] = v1;
-	g.Head[v2].no_followers++;
-}
+// 	g.Head[v2].follower[g.Head[v2].no_followers] = v1;
+// 	g.Head[v2].no_followers++;
+// }
 
-void resize_graph(Graph* g){
-	int temp = g->numVertices;
-	g->numVertices*=2;
-	g->Head = realloc(g->Head, g->numVertices*sizeof(GraphNode));
+// void resize_graph(Graph* g){
+// 	int temp = g->numVertices;
+// 	g->numVertices*=2;
+// 	g->Head = realloc(g->Head, g->numVertices*sizeof(GraphNode));
 
 
-	for(int i=temp;i<g->numVertices;i++){
-		g->Head[i].numEdges = 0;
-		g->Head[i].maxSize = 1;
-		g->Head[i].parent = (int*)malloc(sizeof(int));
-		g->Head[i].EdgeLen = (int*)malloc(sizeof(int));
-		g->Head[i].userExistence = 0;
+// 	for(int i=temp;i<g->numVertices;i++){
+// 		g->Head[i].numEdges = 0;
+// 		g->Head[i].maxSize = 1;
+// 		g->Head[i].parent = (int*)malloc(sizeof(int));
+// 		g->Head[i].EdgeLen = (int*)malloc(sizeof(int));
+// 		g->Head[i].userExistence = 0;
 		
-		g->Head[i].no_followers = 0;
-		g->Head[i].maxSize_follower = 1;
-		g->Head[i].follower = (int*)malloc(sizeof(int));		
-	}
-}
+// 		g->Head[i].no_followers = 0;
+// 		g->Head[i].maxSize_follower = 1;
+// 		g->Head[i].follower = (int*)malloc(sizeof(int));		
+// 	}
+// }
 void choose_hobby(int a) //function which genereates a boolean string in int form of the hobbies choosen                        
 {
 	a = 0;
@@ -111,6 +111,7 @@ void create_user(Graph g) //reads and stores the data of the user
 	printf("7) Anime\n");
 	printf("8) Programming\n");
 	choose_hobby(g.Head[id].hobbies);
+	printf("Your registration is complete and you user id is %d",id);
 }
 void init_hobby() //initialises the hobbies in the database
 {
