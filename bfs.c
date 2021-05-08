@@ -66,11 +66,11 @@ int IsEmpty(PtrQueue q)
         return 0;
 }
 
-void bfs(struct Graph* g, int begin)
+void bfs(Graph* g, int begin)
 {
     int n = 0;
 
-    int x = g->vertices;
+    int x = g->numVertices;
 
     int visited[x];
 
@@ -93,50 +93,21 @@ void bfs(struct Graph* g, int begin)
         
         printf("%d\n", top);
 
-        struct GraphNode* x = g->list[top];
+        GraphNode x = g->Head[top];
 
-        while(x != NULL)
+        int t = x.numEdges;
+        int l = t;
+
+        while(t != 0)
         {
-            int adjacent = x->vertex;
+            int adjacent = x.parent[l - t];
 
             if(visited[adjacent] == 0)
             {
                 visited[adjacent] = -1;
                 Enqueue(q, adjacent);
             }
-            x = x->next;
+            t--;
         }
     }
-}
-
-PtrGraphNode NewGraphNode(int vertex)
-{
-    PtrGraphNode gn = (PtrGraphNode)malloc(sizeof(StrGraphNode));
-    gn->vertex = vertex;
-    gn->next = NULL;
-    return gn;
-}
-
-PtrGraph CreateGraph(int num)
-{
-    PtrGraph g = (PtrGraph)malloc(sizeof(StrGraph));
-    g->vertices = num;
-    g->list = (PtrGraphNode*)malloc(num * sizeof(PtrGraphNode));
-    for(int i = 0; i < num; i++)
-    {
-        g->list[i] = NULL;
-    }
-
-    return g;
-}
-
-void InsertEdge(PtrGraph g, int start, int end)
-{
-    PtrGraphNode x = NewGraphNode(end);
-    x->next = g->list[start];
-    g->list[start] = x;
-
-    PtrGraphNode y = NewGraphNode(start);
-    y->next = g->list[end];
-    g->list[end] = y;
 }
