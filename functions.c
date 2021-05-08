@@ -1,12 +1,6 @@
 #include "struct.h"
 array_hobby list_hobbies[8]; //stores hobby names
 stack *next_id;
-void initialise() //all initalisation goes here
-{
-	push(&next_id, 0);
-	init_hobby();
-	
-}
 Graph CreateGraph(int size) //Creates the intial graph
 {
 	Graph resultGraph;
@@ -53,6 +47,24 @@ void StartFollowing(Graph g, int v1, int v2)
 
 	g.Head[v2].follower[g.Head[v2].no_followers] = v1;
 	g.Head[v2].no_followers++;
+}
+
+void resize_grpah(Graph* g){
+	int temp = g->numVertices;
+	g->numVertices*=2;
+	g->Head = realloc(g->numVertices*sizeof(GraphNode),);
+
+
+	for(int i=temp;i<g->numVertices;i++){
+		g->Head[i].numEdges = 0;
+		g->Head[i].maxSize = 1;
+		g->Head[i].parent = (int*)malloc(sizeof(int));
+		g->Head[i].EdgeLen = (int*)malloc(sizeof(int));
+		
+		g->Head[i].no_followers = 0;
+		g->Head[i].maxSize_follower = 1;
+		g->Head[i].follower = (int*)malloc(sizeof(int));		
+	}
 }
 void choose_hobby(int a) //function which genereates a boolean string in int form of the hobbies choosen                        
 {
@@ -109,7 +121,7 @@ void init_hobby() //initialises the hobbies in the database
 	strcpy(list_hobbies[6].hobby, "Anime");
 	strcpy(list_hobbies[7].hobby, "Programming");
 }
-void hobby_recommend(Graph g, int id);
+void hobby_recommend(Graph g, int id)
 {
 	
 }
@@ -192,7 +204,12 @@ void friendship_status()
 {
 
 }
-
+void initialise() //all initalisation goes here
+{
+	push(&next_id, 0);
+	init_hobby();
+	
+}
 // int main()
 // {
 // 	Graph alpha;
