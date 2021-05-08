@@ -1,6 +1,6 @@
 #include "struct.h"
 // Takes the pointer to a user node  and returns string
-void encrypt_pass(User* user_node)
+char * encrypt_pass(User* user_node)
 {
     char salt[] = "$1$3456789";
     salt[3]=user_node->name[0];
