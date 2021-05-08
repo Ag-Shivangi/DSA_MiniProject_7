@@ -10,8 +10,8 @@
 #include <unistd.h>
 #include <crypt.h>
 #include "stack.c"
-#include "graph.h"
-#include "graph.c"
+// #include "graph.h"
+// #include "graph.c"
 #define fo(i, n) for (int i = 0; i < n; i++)
 #define fod(i, a, b) for (int i = a; i < b; i++)
 typedef long long ll;
@@ -29,7 +29,7 @@ typedef struct ActualGraph
 typedef struct GraphNode
 {
     int vertexID;
-    int *parent; //array containing people it's following ig.
+    int *parent; //array containing people it's following .
     int *EdgeLen;
     int numEdges; //number of the people it's follwing.
     int maxSize;  //current allocatedd maximum size of the parent arr
@@ -45,7 +45,7 @@ typedef struct GraphNode
     int month;
     int year;
 
-    char hobbies[10]; //boolean string
+    int hobbies; //boolen srting in int form
     //int no_following;
     //int *following;
 

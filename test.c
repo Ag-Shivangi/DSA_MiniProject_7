@@ -1,19 +1,10 @@
 #include <stdio.h>
-#include <time.h>
-#include <unistd.h>
-#include <crypt.h>
-
-int main(void)
+int main()
 {
-    char password[] = "AAAA";
-    char toCrack[] = "AAzz";
-    printf("%s\n", password);
-    printf("%s\n", toCrack);
-
-    char *toCrackCiph = crypt(toCrack, "da");
-    printf("%s\n", toCrackCiph);
-
-    char *passwordCiph = crypt(password, "aa");
-    printf("%s\n", passwordCiph);
-    return 0;
+    // char a[]="110";
+    // char b[]="101";
+    int a=101;
+    int b=110;
+    printf("%d",a&b);
 }
+ 

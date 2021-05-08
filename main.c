@@ -1,12 +1,6 @@
 #include "struct.h"
 int main()
 {
-<<<<<<< HEAD
-    init_hobby();
-    choose_hobby();
-    CreateGraph(100);
-    
-=======
     int n=256,user_choice,user_count=0;  //n=size of the user array(preferably a power of 2) 
     //Graph graph = CreateGraph(n);
     printf("\n  BONJOUR! WELCOME TO THE FRIENDS RECCOMENDATION SYSTEM \n\n");
@@ -33,6 +27,5 @@ int main()
         }
     } while (user_choice != 3);
     printf("\n\t****  Au Revoir Mon Amie :)  ****\n");
->>>>>>> cdba9a49cc0f9fdd5178c8fc842630b26db1c637
 
 }
