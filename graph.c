@@ -1,8 +1,6 @@
 #include "graph.h"
 #include "priority_queue.h"
 
-
-
 Graph CreateGraph(int size){
 	Graph resultGraph;
 
@@ -119,15 +117,16 @@ int* DjikstraAlgo(Graph g, GraphNode ref){
 }
 
 void DeleteVertex(Graph g, int vertex){
-	for(int i=0;i<g.numVertices;i++){
+	for(int k=0;k<g.Head[vertex].maxSize_follower;k++){
 		int index = -1;
+		
+		int i = g.Head[vertex].follower[k];
 		
 		for(int j=0;j<g.Head[i].numEdges;j++){
 			if(g.Head[i].parent[j]==vertex){
 				index = j;
 			}
 		}
-
 
 		if(index!=-1)
 			for(int j=index+1;j<g.Head[i].numEdges;j++)
