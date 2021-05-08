@@ -24,7 +24,7 @@ Graph CreateGraph(int size){
 }
 
 void StartFollowing(Graph g, int v1, int v2){	//v1 starts following v2
-	if(g.Head[v1].maxSize == g.Head[v1].numEdges ){
+	if(g.Head[v1].maxSize == g.Head[v1].numEdges ){//resizes the array of parent if the size exceeds
 		g.Head[v1].maxSize *= 2;
 		g.Head[v1].parent = (int*)realloc(g.Head[v1].parent ,g.Head[v1].maxSize*sizeof(int));
 		g.Head[v1].EdgeLen = (int*)realloc(g.Head[v1].EdgeLen ,g.Head[v1].maxSize*sizeof(int));
@@ -34,7 +34,7 @@ void StartFollowing(Graph g, int v1, int v2){	//v1 starts following v2
 	g.Head[v1].EdgeLen[g.Head[v1].numEdges] = 1;
 	g.Head[v1].numEdges++;
 
-	if(g.Head[v2].maxSize_follower == g.Head[v2].no_followers ){
+	if(g.Head[v2].maxSize_follower == g.Head[v2].no_followers ){ //updating the followers list of v2, and resizing the array
 		g.Head[v2].maxSize_follower *= 2;
 		g.Head[v2].follower = (int*)realloc(g.Head[v1].follower ,g.Head[v1].maxSize_follower*sizeof(int));
 		//g.Head[v1].EdgeLen = (int*)realloc(g.Head[v1].EdgeLen ,g.Head[v1].maxSize*sizeof(int));
