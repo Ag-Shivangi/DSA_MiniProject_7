@@ -225,3 +225,19 @@ void LookUpUser(Graph g,int currID ,int userID){
 	printf("Name of user : %s", g.Head[userID].name);
 	printf("City of location of user: %s", g.Head[userID].city);
 }
+
+void RemoveEdge(Graph g, int v1, int v2){	//v2 is removed from follow list of v1, as in v1 is not following v2 anymore
+
+	int index = -1;
+		
+	for(int j=0;j<g.Head[v1].numEdges;j++){
+		if(g.Head[v1].parent[j]==v2){
+			index = j;
+		}
+	}
+
+	if(index!=-1)
+		for(int j=index+1;j<g.Head[v1].numEdges;j++)
+			g.Head[v1].parent[j-1] = g.Head[v1].parent[j];  
+
+}
