@@ -1,3 +1,4 @@
+#include "functions.h"
 #include "struct.h"
 array_hobby list_hobbies[8]; //stores hobby names
 stack *next_id;
