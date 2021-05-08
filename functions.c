@@ -5,6 +5,7 @@ void initialise() //all initalisation goes here
 {
 	push(&next_id, 0);
 	init_hobby();
+	
 }
 Graph CreateGraph(int size) //Creates the intial graph
 {
@@ -84,7 +85,7 @@ void create_user(Graph g) //reads and stores the data of the user
 	scanf("%s", g.Head[id].name);
 	printf("Enter your city : \n");
 	scanf("%s", g.Head[id].city);
-	printf("Enter you birthday (format: dd/mm/yyyy): \n");
+	printf("Enter you birthday (format: dd/mm/yyyy): \n");	
 	scanf("%d/%d/%d", &g.Head[id].date, &g.Head[id].month, &g.Head[id].year);
 	printf("Enter you choice of hobbies (x,y,z):\n");
 	printf("1) Painting\n");
@@ -108,14 +109,13 @@ void init_hobby() //initialises the hobbies in the database
 	strcpy(list_hobbies[6].hobby, "Anime");
 	strcpy(list_hobbies[7].hobby, "Programming");
 }
-void hobby_recommend(Graph g, int id)
+void hobby_recommend(Graph g, int id);
 {
-
 	
 }
 bfs(Graph g, int begin, int array[])
 {
-	int n = 0; //keeps a count od t
+	int n = 0; //keeps a count of number
 
 	int x = g.numVertices; //number of vertices
 
@@ -178,11 +178,12 @@ void recommendations(Graph g, int id)//function that returns the recommended fri
 	printf("Your friend suggestions are :\n");
 	fo(i,10)
 	{ 
-		printf("%d) %s\nId: %d\n",i+1,g.Head[friends[i]],friends[i]);
+		printf("%d) %s\nId: %d\n",i+1,g.Head[friends[i]].name,friends[i]);
 	}
 }
 void display_details()
 {
+
 }
 void update_details()
 {
@@ -191,8 +192,9 @@ void friendship_status()
 {
 
 }
-int main()
-{
-	Graph alpha;
-	alpha = CreateGraph(10);
-}
+
+// int main()
+// {
+// 	Graph alpha;
+// 	alpha = CreateGraph(10);
+// }
