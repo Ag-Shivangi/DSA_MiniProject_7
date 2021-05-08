@@ -1,7 +1,7 @@
 #include "graph.h"
 #include "priority_queue.h"
 
-Graph CreateGraph(int size){
+Graph CreateGraph(int size){//Creates the intial graph
 	Graph resultGraph;
 
 	resultGraph.numVertices = size;
