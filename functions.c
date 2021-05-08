@@ -214,7 +214,7 @@ void recommendations(Graph g, int id)//function that returns the recommended fri
 }
 void display_details()
 {
-
+   
 }
 void update_details()
 {

@@ -1,5 +1,5 @@
 #include "struct.h"
-// #include "functions.c"
+#include "functions.h"
 int main()
 {
     int n=256,user_choice,user_count=0;  //n=size of the user array(preferably a power of 2) 

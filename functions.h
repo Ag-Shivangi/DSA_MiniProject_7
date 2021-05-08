@@ -15,7 +15,7 @@ void create_user(Graph g);
 
 void init_hobby();
 
-void hobby_recommend(Graph g, int id);
+void hobby_recommend(Graph g, int id, int arr[]);
 
 int bfs(Graph g, int begin, int* arr);
 
