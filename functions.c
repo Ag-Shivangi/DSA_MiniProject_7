@@ -49,10 +49,10 @@ void StartFollowing(Graph g, int v1, int v2)
 	g.Head[v2].no_followers++;
 }
 
-void resize_grpah(Graph* g){
+void resize_graph(Graph* g){
 	int temp = g->numVertices;
 	g->numVertices*=2;
-	g->Head = realloc(g->numVertices*sizeof(GraphNode),);
+	g->Head = realloc(g->Head, g->numVertices*sizeof(GraphNode));
 
 
 	for(int i=temp;i<g->numVertices;i++){
@@ -60,6 +60,7 @@ void resize_grpah(Graph* g){
 		g->Head[i].maxSize = 1;
 		g->Head[i].parent = (int*)malloc(sizeof(int));
 		g->Head[i].EdgeLen = (int*)malloc(sizeof(int));
+		g->Head[i].userExistence = 0;
 		
 		g->Head[i].no_followers = 0;
 		g->Head[i].maxSize_follower = 1;
@@ -121,18 +122,14 @@ void init_hobby() //initialises the hobbies in the database
 	strcpy(list_hobbies[6].hobby, "Anime");
 	strcpy(list_hobbies[7].hobby, "Programming");
 }
-void hobby_recommend(Graph g, int id)
+void hobby_recommend(Graph g, int id, int arr[])
 {
 	
 }
 
 int bfs(Graph g, int begin, int* arr)
 {
-<<<<<<< HEAD
-	int n = 0; //keeps a count of number
-=======
     int n = 0;
->>>>>>> e5044c97085899fab27cc45cc9603b5e9ce0accf
 
     int x = g.numVertices;
 
@@ -192,7 +189,11 @@ int bfs(Graph g, int begin, int* arr)
             t--;
         }
     }
-    return n;
+	if(n<10)
+	{
+        hobby_recommend(g,begin,arr);
+	}
+    
 }
 
 void recommendations(Graph g, int id)//function that returns the recommended friends
@@ -200,7 +201,7 @@ void recommendations(Graph g, int id)//function that returns the recommended fri
 	int friends[10];
 	if (g.Head[id].numEdges == 0)
 	{
-        hobby_recommend(g,id);
+        hobby_recommend(g,id,friends);
 	}
 	else
 	bfs(g,id,friends);

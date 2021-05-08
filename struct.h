@@ -11,7 +11,7 @@
 #include <crypt.h>
 #include "stack.c"
 #include "bfs.h"
-// #include "graph.h"
+#include "graph.h"
 // #include "graph.c"
 #define fo(i, n) for (int i = 0; i < n; i++)
 #define fod(i, a, b) for (int i = a; i < b; i++)
@@ -21,34 +21,34 @@ typedef struct array_hobby
 {
     char hobby[25];
 } array_hobby;
-typedef struct ActualGraph
-{
-    struct GraphNode *Head;
-    int numVertices;
-    int *visitedDFS;
-}Graph;
-typedef struct GraphNode
-{
-    int vertexID;
-    int *parent; //array containing people it's following .
-    int *EdgeLen;
-    int numEdges; //number of the people it's follwing.
-    int maxSize;  //current allocatedd maximum size of the parent arr
-    //apologies for the confusion caused in the naming
-    int no_followers;
-    int *follower; //self explanatory i think
-    int maxSize_follower;
-    char name[30];
-    char city[30];
-   char password[35];
-    //birthday details
-    int date;
-    int month;
-    int year;
+// typedef struct ActualGraph
+// {
+//     struct GraphNode *Head;
+//     int numVertices;
+//     int *visitedDFS;
+// } Graph;
+// typedef struct GraphNode
+// {
+//     int vertexID;
+//     int *parent; //array containing people it's following .
+//     int *EdgeLen;
+//     int numEdges; //number of the people it's follwing.
+//     int maxSize;  //current allocatedd maximum size of the parent arr
+//     //apologies for the confusion caused in the naming
+//     int no_followers;
+//     int *follower; //self explanatory i think
+//     int maxSize_follower;
+//     char name[30];
+//     char city[30];
+//     char password[35];
+//     //birthday details
+//     int date;
+//     int month;
+//     int year;
 
-    int hobbies; //boolen srting in int form
-    //int no_following;
-    //int *following;
+//     int hobbies; //boolen srting in int form
+//     //int no_following;
+//     //int *following;
 
-} GraphNode;
+// } GraphNode;
 #endif
