@@ -50,7 +50,14 @@ void StartFollowing(Graph g, int v1, int v2)
 }
 void create_user(Graph g)
 {
-   printf("Enter you name : ");
+   int id=pop(next_id);
+   printf("Enter you name : \n");
+   scanf("%s",&g.Head[id].name);
+   printf("Enter your city : \n");
+   scanf("%s",&g.Head[id].city);
+   printf("Enter you birthday (format: dd/mm/yyyy): \n");
+   scanf("%d/%d/%d",&g.Head[id].date,&g.Head[id].month,&g.Head[id].year);
+   
 
 }
 void init_hobby() //initialises the hobbies in the database
