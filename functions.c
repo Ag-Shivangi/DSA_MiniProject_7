@@ -111,7 +111,7 @@ void create_user(Graph g) //reads and stores the data of the user
 	printf("7) Anime\n");
 	printf("8) Programming\n");
 	choose_hobby(g.Head[id].hobbies);
-	printf("Your registration is complete and you user id is %d",id);
+	g.Head[id].userExistence = 1;
 }
 void init_hobby() //initialises the hobbies in the database
 {
