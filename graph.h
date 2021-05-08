@@ -27,7 +27,7 @@ typedef struct GraphNode {
     //int no_following;
     //int *following;
 
-
+	int userExistence;
 } GraphNode;
 
 typedef struct ActualGraph {
@@ -39,6 +39,9 @@ typedef struct ActualGraph {
 Graph CreateGraph(int size);
 void CreateEdge(Graph g, int v1, int v2, int edgelen);
 void PrintGraph(Graph g);
+int* DjikstraAlgo(Graph g, GraphNode ref);
+void DeleteVertex(Graph g, int vertex);
+void resize_grpah(Graph* g);
 
 #endif
 
