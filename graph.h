@@ -44,5 +44,6 @@ int *DjikstraAlgo(Graph g, GraphNode ref);
 void DeleteVertex(Graph g, int vertex);
 void resize_graph(Graph *g);
 void LookUpUser(Graph g, int currID, int userID);
+void RemoveEdge(Graph g, int v1, int v2);//v2 is removed from follow list of v1, as in v1 is not following v2 anymore
 
 #endif
