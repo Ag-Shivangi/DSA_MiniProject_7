@@ -24,7 +24,7 @@ typedef struct array_hobby
 typedef struct ActualGraph
 {
     struct GraphNode *Head;
-    int *numVertices;
+    int numVertices;
     int *visitedDFS;
 }Graph;
 typedef struct GraphNode

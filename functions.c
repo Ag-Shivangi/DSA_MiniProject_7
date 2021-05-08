@@ -108,12 +108,16 @@ void init_hobby() //initialises the hobbies in the database
 	strcpy(list_hobbies[6].hobby, "Anime");
 	strcpy(list_hobbies[7].hobby, "Programming");
 }
-void hobby_recommend();
+void hobby_recommend(Graph g, int id)
+{
+
+	
+}
 bfs(Graph g, int begin, int array[])
 {
 	int n = 0; //keeps a count od t
 
-	int x = *(g.numVertices); //number of vertices
+	int x = g.numVertices; //number of vertices
 
 	int visited[x];
 
@@ -162,20 +166,30 @@ bfs(Graph g, int begin, int array[])
 	}
 }
 
-void recommendations(Graph g, int id)
+void recommendations(Graph g, int id)//function that returns the recommended friends
 {
 	int friends[10];
 	if (g.Head[id].numEdges == 0)
 	{
         hobby_recommend(g,id);
 	}
-	
+	else
+	bfs(g,id,friends);
+	printf("Your friend suggestions are :\n");
+	fo(i,10)
+	{ 
+		printf("%d) %s\nId: %d\n",i+1,g.Head[friends[i]],friends[i]);
+	}
 }
 void display_details()
 {
 }
 void update_details()
 {
+}
+void friendship_status()
+{
+
 }
 int main()
 {
