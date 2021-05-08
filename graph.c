@@ -1,4 +1,7 @@
 #include "graph.h"
+#include "priority_queue.h"
+
+
 
 Graph CreateGraph(int size){
 	Graph resultGraph;
@@ -12,7 +15,7 @@ Graph CreateGraph(int size){
 		resultGraph.Head[i].maxSize = 1;
 		resultGraph.Head[i].parent = (int*)malloc(sizeof(int));
 		resultGraph.Head[i].EdgeLen = (int*)malloc(sizeof(int));
-		resultGraph.Head[i].vertexID = i;
+		//resultGraph.Head[i].vertexID = i;
 	}
 	
 	return resultGraph;
@@ -45,6 +48,8 @@ void PrintGraph(Graph g){
 		printf("\n");
 	}
 }
+
+
 
 int* DjikstraAlgo(Graph g, GraphNode ref){
 	PQueue internal;
@@ -86,4 +91,31 @@ int* DjikstraAlgo(Graph g, GraphNode ref){
 	free(internal->arr);
 	free(internal);
 	return distance;
+}
+
+void DeleteVertex(Graph g, int vertex){
+	for(int i=0;i<g.numVertices;i++){
+		int index = -1;
+		
+		for(int j=0;j<g.Head[i].numEdges;j++){
+			if(g.Head[i].parent[j]==vertex){
+				index = j;
+			}
+		}
+
+
+		if(index!=-1)
+			for(int j=index+1;j<g.Head[i].numEdges;j++)
+				g.Head[i].parent[j-1] = g.Head[i].parent[j];  
+	}
+	
+	free(g.Head[vertex].EdgeLen);
+	free(g.Head[vertex].parent);
+
+	g.Head[vertex].numEdges = 0;
+	g.Head[vertex].maxSize = 1;	
+
+	g.Head[vertex].parent = (int*)malloc(sizeof(int));
+	g.Head[vertex].EdgeLen = (int*)malloc(sizeof(int));
+
 }
