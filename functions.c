@@ -348,7 +348,12 @@ void common_hobbies(Graph g, int v1, int v2)//takes the boolean strings and \
 }
 void friendship_status(Graph g, int v1, int v2)
 {
-	
+	int k=0;
+	k=CheckFriendshipStatus(g,v1,v2);
+	if(k)
+	{
+            common_hobbies(g,v1,v2);
+	}	
 }
 void initialise() //all initalisation goes here
 {
