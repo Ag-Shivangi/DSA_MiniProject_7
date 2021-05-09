@@ -1,7 +1,7 @@
 #ifndef __FUNCTIONS_H
 #define __FUNCTIONS_H
 
-#include "struct.h"
+#include "graph.h"
 typedef struct ad_node
 {
     int vertex;
@@ -27,13 +27,13 @@ void StartFollowing(Graph g, int v1, int v2);
 
 void resize_grpah(Graph* g);
 
-void choose_hobby(int a, int id);
+void choose_hobby(Graph g, int id);
 
 void create_user(Graph g);
 
 void init_hobby();
 
-void hobby_recommend(Graph g, int id, int arr[]);
+int hobby_recommend(Graph g, int id, int arr[], int n);
 
 int bfs(Graph g, int begin, int* arr);
 

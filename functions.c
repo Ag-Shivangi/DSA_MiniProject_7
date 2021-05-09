@@ -1,5 +1,8 @@
-#include "functions.h"
+#include "graph.c"
+#include "header.c"
 #include "struct.h"
+#include <math.h>
+#include "functions.h"
 array_hobby list_hobbies[8]; //stores hobby names
 stack *next_id;
 hobby *hobby_graph;
@@ -21,14 +24,13 @@ void make_edge(hobby *alpha, int e1, int e2)
 }
 void hobby_array()
 {
-	hobby_graph = make_graph(256); //graph stores all the hobbies,there are 256 possibilities
+	hobby_graph = make_graph(512); //graph stores all the hobbies,there are 256 possibilities
 }
-void choose_hobby(int a[], int id) //function which genereates a boolean string in int form of the hobbies choosen
+void choose_hobby(Graph g, int id) //function which genereates a boolean string in int form of the hobbies choosen
 {
-
-	int count[8] = {};
 	char choosen[25];
 	scanf("%s", choosen);
+	int count[8] = {};
 	fo(i, strlen(choosen))
 	{
 		if (choosen[i] != ',')
@@ -38,12 +40,12 @@ void choose_hobby(int a[], int id) //function which genereates a boolean string 
 	}
 	fo(i, 8)
 	{
-		a[i] = count[i];
+		g.Head[id].hobbies[i] = count[i];
 	}
 	int number = 0;
 	fo(i, 8)
 	{
-		number = number + pow(2, count[i]);
+		number = number * 2 + count[7 - i];
 	}
 	make_edge(hobby_graph, number, id);
 }
@@ -55,23 +57,23 @@ void create_user(Graph g) //reads and stores the data of the user
 		resize_graph(&g);
 	}
 	push(&next_id, id + 1);
-	printf("Enter you name : \n");
-	scanf("%s", g.Head[id].name);
-	printf("Enter your city : \n");
-	scanf("%s", g.Head[id].city);
-	printf("Enter you birthday (format: dd/mm/yyyy): \n");
-	scanf("%d/%d/%d", &g.Head[id].date, &g.Head[id].month, &g.Head[id].year);
-	printf("Enter you choice of hobbies (x,y,z):\n");
-	printf("1) Painting\n");
-	printf("2) Dance\n");
-	printf("3) Music\n");
-	printf("4) Cricket\n");
-	printf("5) Football\n");
-	printf("6) Gaming\n");
-	printf("7) Anime\n");
-	printf("8) Programming\n");
-	choose_hobby(g.Head[id].hobbies, id);
-	printf("Your Registration is complete and your assigned id is %d\n", id);
+	// printf("Enter you name : \n");
+	scanf("%s[^\n]", g.Head[id].name);
+	// printf("Enter your city : \n");
+	scanf("%s[^\n]", g.Head[id].city);
+	// printf("Enter you birthday (format: dd/mm/yyyy): \n");
+	scanf("%d/%d/%d ", &g.Head[id].date, &g.Head[id].month, &g.Head[id].year);
+	// printf("Enter you choice of hobbies (x,y,z):\n");
+	// printf("1) Painting\n");
+	// printf("2) Dance\n");
+	// printf("3) Music\n");
+	// printf("4) Cricket\n");
+	// printf("5) Football\n");
+	// printf("6) Gaming\n");
+	// printf("7) Anime\n");
+	// printf("8) Programming\n");
+	choose_hobby(g, id);
+	// printf("Your Registration is complete and your assigned id is %d\n", id);
 	g.Head[id].userExistence = 1;
 }
 void init_hobby() //initialises the hobbies in the database
@@ -85,20 +87,26 @@ void init_hobby() //initialises the hobbies in the database
 	strcpy(list_hobbies[6].hobby, "Anime");
 	strcpy(list_hobbies[7].hobby, "Programming");
 }
-void hobby_recommend(Graph g, int id, int arr[], int number)
+int hobby_recommend(Graph g, int id, int arr[], int number)
 {
-	int count[256] = {};
+	int count[512] = {};
 	int temp[8];
-	int n;
-	fo(i, 8) if (g.Head[id].hobbies[i] == 1)
-		n++;
-	perm store[(int)pow(2, n)];
-	fo(zi, pow(2, n))
+	int n = 0;
+	for (int i = 0; i < 8; i++)
 	{
-		fo(i, 8)
+		if (g.Head[id].hobbies[i] != 1)
+			n++;
+	}
+	perm store[(int)pow(2, n)];
+	for (int zi = 0; zi < pow(2, n); zi++)
+	{
+		fo(i, 8) //copies the main string
+		{
 			temp[i] = g.Head[id].hobbies[i];
+			store[zi].count[i] = 0;
+		}
 		int j = 0, m = zi, k = 0;
-		while (m != 0)
+		while (m != 0) //converts iter to binary
 		{
 			store[zi].count[k] = m % 2;
 			m = m / 2;
@@ -116,35 +124,41 @@ void hobby_recommend(Graph g, int id, int arr[], int number)
 		int num = 0;
 		fo(i, 8)
 		{
-			num = num + pow(2, temp[i]);
+			num = num * 2 + temp[7 - i];
 		}
+
 		ad_node *point = hobby_graph->array[num].head;
 		while (point != NULL)
 		{
-			arr[number] = point->vertex;
-			number++;
-			if (number > 10)
-				break;
+			if (point->vertex != id)
+			{
+				arr[number] = point->vertex;
+				if (number == 10)
+					break;
+				number++;
+			}
+			point = point->next;
 		}
 	}
 	int tn = 8 - n;
 	if (number < 10)
 	{
-		fo(zi, pow(2, tn) - 1)
+		for (int zi = pow(2, tn) - 2; zi >= 0; zi--)
 		{
 			fo(i, 8)
-				temp[i] = g.Head[id].hobbies[i];
+				temp[i] = g.Head[id].hobbies[i]; //copies the main boolen string
 			int j = 0, m = zi, k = 0;
-			int count[n];
-			while (m != 0)
+			int count[8];
+			fo(li, 8)
+				count[li] = 0;
+			while (m != 0) //converts iter to binary
 			{
 				count[k] = m % 2;
 				m = m / 2;
 				k++;
 			}
-			fo(li, pow(2, n))
-				k = 0;
-			fo(i, 8)
+			k = 0;
+			fo(i, 8) //finds the permuted binary string
 			{
 				if (temp[i] == 1)
 					temp[i] = count[k];
@@ -153,23 +167,24 @@ void hobby_recommend(Graph g, int id, int arr[], int number)
 				k++;
 			}
 			int num = 0;
-			int num = 0;
-			fo(i, 8)
+			fo(i, 8) //finds the value in decimal after permutation
 			{
-				num = num + pow(2, temp[i]);
+				num = num * 2 + temp[7 - i];
 			}
 			ad_node *point = hobby_graph->array[num].head;
 			while (point != NULL)
 			{
 				arr[number] = point->vertex;
-				number++;
-				if (number > 10)
+				if (number == 10)
 					break;
+				number++;
+				point = point->next;
 			}
 		}
 	}
+	return number;
 }
-int bfs(Graph g, int begin, int *arr)
+int bfs(Graph g, int begin, int arr[])
 {
 	int n = 0;
 
@@ -233,21 +248,22 @@ int bfs(Graph g, int begin, int *arr)
 	}
 	if (n < 10)
 	{
-		hobby_recommend(g, begin, arr);
+		hobby_recommend(g, begin, arr, n);
 	}
+	return n;
 }
 
 void recommendations(Graph g, int id) //function that returns the recommended friends
 {
-	int friends[10];
+	int friends[10], n;
 	if (g.Head[id].numEdges == 0)
 	{
-		hobby_recommend(g, id, friends, 0);
+		n = hobby_recommend(g, id, friends, 0);
 	}
 	else
-		bfs(g, id, friends);
+		n = bfs(g, id, friends);
 	printf("Your friend suggestions are :\n");
-	fo(i, 10)
+	for (int i = 0; i < n; i++)
 	{
 		printf("%d) %s\nId: %d\n", i + 1, g.Head[friends[i]].name, friends[i]);
 	}
@@ -267,6 +283,7 @@ void initialise() //all initalisation goes here
 {
 	push(&next_id, 0);
 	init_hobby();
+	hobby_array();
 }
 void delete_user(Graph g, int id)
 {
@@ -375,4 +392,17 @@ void delete_user(Graph g, int id)
 // {
 // 	Graph alpha;
 // 	alpha = CreateGraph(10);
+// }
+// int main()
+// {
+// 	initialise();
+// 	hobby_array();
+// 	Graph alpha = CreateGraph(8);
+// 	create_user(alpha);
+// 	create_user(alpha);
+// 	create_user(alpha);
+// 	create_user(alpha);
+// 	create_user(alpha);
+// 	create_user(alpha);
+// 	recommendations(alpha, 0);
 // }
