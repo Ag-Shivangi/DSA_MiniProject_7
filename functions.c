@@ -482,7 +482,7 @@ void user_login(Graph g)
                 {
                     int look_user;   //  Take user_id of user to look up
                     scanf("%d",&look_user);
-                    if(g.Head[look_user]userExistence==0)
+                    if(g.Head[look_user].userExistence==0)
                     {
                         printf("\n\t***  The User ID doesn't exist. File a Missing Persons Report !?  ***\n");
                     }
