@@ -1,1 +1,9 @@
                                     MINI-PROJECT-7 (REPORT)
+                                    FRIENDS RECOMMENDATION SYSTEM
+
+Main initiative : Developing a friends recommendation system for example like facebook.
+Specifications as a user:
+    Users can register in your system. 
+    Each user have some parameters like name,age,cityname,hobbies,etc.
+    Also there is some unique ID for every user.(ID be a minimum positive integer which is not currently in use)
+    
