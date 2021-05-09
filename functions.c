@@ -409,11 +409,12 @@ void user_login(Graph g)
     }
     return;
 }
+/*
 int main()
 {
 	Graph alpha;
 	alpha = CreateGraph(10);
-}
+}*/
 // int main()
 // {
 // 	initialise();
