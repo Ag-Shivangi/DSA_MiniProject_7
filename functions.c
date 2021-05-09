@@ -3,11 +3,16 @@
 #include "struct.h"
 #include <math.h>
 #include "functions.h"
-#include "encrypt.c"
 array_hobby list_hobbies[8]; //stores hobby names
 stack *next_id;
 hobby *hobby_graph;
+<<<<<<< HEAD
 hobby *make_graph(int v) //simple graph
+=======
+
+
+hobby *make_graph(int v)
+>>>>>>> 077f7334c584fb4d337118e00f5150b6b9cbb5e9
 {
 	hobby *temp;
 	temp = (hobby *)malloc(sizeof(hobby));
@@ -64,14 +69,13 @@ void create_user(Graph g) //reads and stores the data of the user
 		resize_graph(&g);
 	}
 	push(&next_id, id + 1);
-	printf("Enter you name : \n");
+	// printf("Enter you name : \n");
 	scanf("%s[^\n]", g.Head[id].name);
-	printf("New password :");
-	scanf("%s", g.Head[id].password);
-	printf("Enter your city : \n");
+	// printf("Enter your city : \n");
 	scanf("%s[^\n]", g.Head[id].city);
-	printf("Enter you birthday (format: dd/mm/yyyy): \n");
+	// printf("Enter you birthday (format: dd/mm/yyyy): \n");
 	scanf("%d/%d/%d ", &g.Head[id].date, &g.Head[id].month, &g.Head[id].year);
+<<<<<<< HEAD
 	printf("Enter you choice of hobbies (x,y,z):\n");
 	printf("1) Painting\n");
 	printf("2) Dance\n");
@@ -83,6 +87,19 @@ void create_user(Graph g) //reads and stores the data of the user
 	printf("8) Programming\n");
 	choose_hobby(g, id);
 	printf("Your Registration is complete and your assigned id is %d\n", id);
+=======
+	// printf("Enter you choice of hobbies (x,y,z):\n");
+	// printf("1) Painting\n");
+	// printf("2) Dance\n");
+	// printf("3) Music\n");
+	// printf("4) Cricket\n");
+	// printf("5) Football\n");
+	// printf("6) Gaming\n");
+	// printf("7) Anime\n");
+	// printf("8) Programming\n");
+	choose_hobby(g, id);
+	// printf("Your Registration is complete and your assigned id is %d\n", id);
+>>>>>>> 077f7334c584fb4d337118e00f5150b6b9cbb5e9
 	g.Head[id].userExistence = 1;
 }
 void init_hobby() //initialises the hobbies in the database
@@ -135,7 +152,7 @@ int hobby_recommend(Graph g, int id, int arr[], int number)
 			k++;
 		}
 		k = 0;
-		fo(i, 8) //finds the permuted binary string
+		fo(i, 8)
 		{
 			if (temp[i] == 0)
 			{
@@ -206,73 +223,82 @@ int hobby_recommend(Graph g, int id, int arr[], int number)
 	}
 	return number;
 }
+
 int bfs(Graph g, int begin, int arr[])
 {
-	int n = 0;
+    int n = 0; // If the no.of friends we get through bfs is less than 10
+               // then we use n -> no.of friends obtained by bfs
+               // We do bfs only till n<=10
 
-	int x = g.numVertices;
+    int x = g.numVertices;
 
-	int visited[x];
-	int adjvisited[x];
+    int visited[x]; // An array to keep track of the visited vertices
 
-	for (int i = 0; i < x; i++)
-	{
-		visited[i] = 0;
-	}
+    int adjvisited[x]; // An array to tell whether a person is a direct friend of begin or not
+                       // Begin and the adjacent vertices of begin are marked 1
+                       // So that they won't get stored in the array, and the frinens of a
+                       //person are not recommended again.
+                       // If adjvisited[i] = 0 then i is not a direct friend of begin and i != x
+                       // If adjvisited[j] = 0 then j is either a direct friend of begin or j == x
+    for (int i = 0; i < x; i++)
+    {                   // In visited[x] array
+        visited[i] = 0; // 0 indictes that the vertex is not visited
+    }                   // -1 indicates that the vertex is in the queue
+                        // 1 indicates that the vertex is visited
 
-	PtrQueue q = CreateQueue();
+    PtrQueue q = CreateQueue();
 
-	Enqueue(q, begin);
+    Enqueue(q, begin);
 
-	GraphNode temp = g.Head[begin];
+    GraphNode temp = g.Head[begin];
 
-	int t = temp.numEdges;
+    int t = temp.numEdges;
 
-	int l = t;
+    int l = t;
 
-	while (t != 0)
-	{
-		int adjacent = temp.parent[l - t];
-		adjvisited[adjacent] = 1;
-		t--;
-	}
+    while (t != 0)
+    {
+        int adjacent = temp.parent[l - t];
+        adjvisited[adjacent] = 1;
+        t--;
+    } // Begin and the adjacent vertices of begin are marked 1
 
-	adjvisited[begin] = 1;
+    adjvisited[begin] = 1;
 
-	while (IsEmpty(q) != 1 && n <= 10)
-	{
-		int top = Dequeue(q);
+    while (IsEmpty(q) != 1 && n <= 10)
+    {
+        int top = Dequeue(q);
 
-		visited[top] = 1;
+        visited[top] = 1;
 
-		if (adjvisited[top] != 1)
-		{
-			arr[n] = top;
-			n++;
-		}
+        if (adjvisited[top] != 1) // The top of Dequeue is stored in arr if
+        {                         // he is not a direct friend of begin
+            arr[n] = top;
+            n++; // Increment n;
+        }
 
-		GraphNode x = g.Head[top];
+        GraphNode x = g.Head[top];
 
-		int t = x.numEdges;
-		int l = t;
+        int t = x.numEdges;
+        int l = t;
 
-		while (t != 0)
-		{
-			int adjacent = x.parent[l - t];
+        while (t != 0) // for all the adjacent vertices of top we repeat the process
+        {
+            int adjacent = x.parent[l - t];
 
-			if (visited[adjacent] == 0)
-			{
-				visited[adjacent] = -1;
-				Enqueue(q, adjacent);
-			}
-			t--;
-		}
-	}
-	if (n < 10)
-	{
-		hobby_recommend(g, begin, arr, n);
-	}
-	return n;
+            if (visited[adjacent] == 0) // if that vertex is not visited
+            {
+                visited[adjacent] = -1; // -1 indicates that the number is in the queue
+                Enqueue(q, adjacent);   // Enqueue that vertex
+            }
+            t--;
+        }
+    }
+    if (n < 10) // If n is less than 10 then we call the hobby_recommend function
+    {
+        hobby_recommend(g, begin, arr, n);
+    }
+    return n;
 }
 
 void recommendations(Graph g, int id) //function that returns the recommended friends
@@ -294,6 +320,7 @@ void display_details(Graph g, int userID)
 {
 	printf("Name is %s", g.Head[userID].name);
 	printf("City of location of user: %s", g.Head[userID].city);
+<<<<<<< HEAD
     
 	int flag = 0;
 	printf("Hobbies : ");
@@ -306,6 +333,18 @@ void display_details(Graph g, int userID)
 
 	if (!flag)
 		printf("None");
+=======
+	int flag = 0;
+	printf("Hobbies : ");
+	for(int i=0;i<8;i++)
+		if(g.Head[userID].hobbies[i]){
+			printf("%s ", list_hobbies[i].hobby);
+			flag = 1;
+		}
+
+	if(!flag)
+		printf("None");	
+>>>>>>> 077f7334c584fb4d337118e00f5150b6b9cbb5e9
 }
 void update_details()
 {
@@ -327,6 +366,7 @@ void delete_user(Graph g, int id)
 }
 void user_login(Graph g)
 {
+<<<<<<< HEAD
 	int user_id, user_choice;
 	scanf("%d", &user_id);
 	printf("\n\t Please Enter User ID\n");
@@ -414,10 +454,100 @@ void user_login(Graph g)
 			}
 			}
 		} while (user_choice != 5 || user_choice != 6);
+=======
+    int user_id,user_choice;
+    scanf("%d",&user_id);
+    printf("\n\t Please Enter User ID\n");
+    //if the user id doesn't exist, It displays error message and terminates function
+    if(g.Head[user_id].userExistence==0)
+    {
+        printf("\n\t***  The USER ID entered is INVALID. You Don't Exist in our World :((  ***\n");
+        return;
+    }
+    if(strcmp(g.Head[user_id].password,encrypt_pass(&g.Head[user_id]))==0)
+    {
+        printf("\n\t1)\tAdd Friends (YAY ;P)\n\t2)\tRemove Friend (ono)\n\t3)\tCheck Friendlist :p\n");
+        printf("\t4)\tLook-up User ID :o\n\t5)\tLOG OUT :// \n\t6)\tDelete Account  :???\n");
+        do
+        {
+            switch(user_choice)
+            {
+                case 1:
+                {
+                    int new_frnd;   //  Take user_id of friend-to-be
+                    scanf("%d",&new_frnd);
+                    if(g.Head[new_frnd].userExistence==0)
+                    {
+                        printf("\n\t***  The User ID doesn't exist. Imaginary Friends FTW !  ***\n");
+                    }
+                    else
+                    {
+                        StartFollowing(g,user_id,new_frnd);//Adds friend
+                        printf("\n\tYAY You have a NEW Friend XD\n");
+                    }
+                    break;
+                }
+                case 2:
+                {
+                    int no_more_frnd;
+                    scanf("%d",&no_more_frnd);
+                    if(g.Head[no_more_frnd].userExistence==0)
+                    {
+                        printf("\n\t***  The USER ID doesn't exist. Fighting with your Imagiinary Friends again?  ***\n");
+                    }
+                    else
+                    {
+                        Unfriend(g,user_id,no_more_frnd);   //  Removes Friend
+                        printf("\n\tUnfriended Successfully !!\n");
+                    }
+                    break;
+                }
+                case 3:
+                {
+                    checkFriendlist(g,user_id);
+                    break;
+                }
+                case 4:
+                {
+                    int look_user;   //  Take user_id of user to look up
+                    scanf("%d",&look_user);
+                    if(g.Head[look_user].userExistence==0)
+                    {
+                        printf("\n\t***  The User ID doesn't exist. File a Missing Persons Report !?  ***\n");
+                    }
+                    else
+                    {
+                        LookUpUser(g,user_id,look_user); //  Displays details
+                    }
+                    break;
+                }
+                case 5:
+                {
+                    // logs-out user and terminates function
+                    printf("\n\t***  LOG-OUT SUCCESSFUL ! See You On The Other Side  ***\n");
+                    return;
+                    break;
+                }
+                case 6:
+                {
+                    // deletes user
+                    Remove_user(g,user_id);
+                    return;
+                    break;
+                }
+                default:
+                {
+                    printf("\n Blurry Vision? Time to visit an Optometrist? Or some Coffee?\n\n");
+                    break;
+                }
+            }
+        }while(user_choice!=5 || user_choice!=6);
+>>>>>>> 077f7334c584fb4d337118e00f5150b6b9cbb5e9
     }
     //if the password is incorrect, access is denied and function is terminated
     else
     {
+<<<<<<< HEAD
 		printf("\n\t*** The Password is INCORRECT !! You looking for Trouble? Or Almonds? ***");
 		return;
     }
@@ -437,3 +567,29 @@ int main()
 	recommendations(alpha, 0);
 	display_details(alpha, 0);
 }
+=======
+        printf("\n\t*** The Password is INCORRECT !! You looking for Trouble? Or Almonds? ***");
+        return;
+    }
+    return;
+}
+/*
+int main()
+{
+	Graph alpha;
+	alpha = CreateGraph(10);
+}*/
+// int main()
+// {
+// 	initialise();
+// 	hobby_array();
+// 	Graph alpha = CreateGraph(8);
+// 	create_user(alpha);
+// 	create_user(alpha);
+// 	create_user(alpha);
+// 	create_user(alpha);
+// 	create_user(alpha);
+// 	create_user(alpha);
+// 	recommendations(alpha, 0);
+// }
+>>>>>>> 077f7334c584fb4d337118e00f5150b6b9cbb5e9

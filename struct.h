@@ -21,4 +21,40 @@ typedef struct array_hobby
 {
     char hobby[25];
 } array_hobby;
+<<<<<<< HEAD
+=======
+
+char *encrypt_pass(GraphNode *user_node);
+// typedef struct ActualGraph
+// {
+//     struct GraphNode *Head;
+//     int numVertices;
+//     int *visitedDFS;
+// } Graph;
+// typedef struct GraphNode
+// {
+//     int vertexID;
+//     int *parent; //array containing people it's following .
+//     int *EdgeLen;
+//     int numEdges; //number of the people it's follwing.
+//     int maxSize;  //current allocatedd maximum size of the parent arr
+//     //apologies for the confusion caused in the naming
+//     int no_followers;
+//     int *follower; //self explanatory i think
+//     int maxSize_follower;
+//     char name[30];
+//     char city[30];
+//     char password[35];
+//     //birthday details
+//     int date;
+//     int month;
+//     int year;
+
+//     int hobbies; //boolen srting in int form
+//     //int no_following;
+//     //int *following;
+//     int userExistence;
+
+// } GraphNode;
+>>>>>>> 077f7334c584fb4d337118e00f5150b6b9cbb5e9
 #endif
