@@ -312,7 +312,8 @@ void display_details(Graph g, int userID)
 	if (!flag)
 		printf("None");
 }
-void common_hobbies(Graph g, int v1, int v2)
+void common_hobbies(Graph g, int v1, int v2)//takes the boolean strings and \
+                                            then uses AND operator to find the common hobbies
 {
 	int num1 = 0;
 	fo(i, 8)
@@ -332,21 +333,23 @@ void common_hobbies(Graph g, int v1, int v2)
 		count[k]=ans%10;
 	    ans=ans/10;
         k++;
-	}
+	} 
+	k=0;
+	print("The hobbies in common are :\n");
 	for(int i=0;i<8;i++)
 	{
         if(count[i]==1)
 		{
-             p
-
+             printf("%s\n", list_hobbies[i].hobby);
+			k++;
 		}
 	}
-}
-void update_details()
-{
+	if(k==0)
+	printf("None\n");
 }
 void friendship_status(Graph g, int v1, int v2)
 {
+	
 }
 void initialise() //all initalisation goes here
 {
