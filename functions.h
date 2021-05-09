@@ -49,5 +49,5 @@ void initialise();
 
 char *encrypt_pass(GraphNode *user_node);
 
-
+void user_login(Graph g);
 #endif
