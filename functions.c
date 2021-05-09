@@ -7,7 +7,7 @@
 array_hobby list_hobbies[8]; //stores hobby names
 stack *next_id;
 hobby *hobby_graph;
-hobby *make_graph(int v)//simple graph 
+hobby *make_graph(int v) //simple graph
 {
 	hobby *temp;
 	temp = (hobby *)malloc(sizeof(hobby));
@@ -23,11 +23,17 @@ void make_edge(hobby *alpha, int e1, int e2)
 	temp->next = alpha->array[e1].head;
 	alpha->array[e1].head = temp;
 }
-void hobby_array()
-{
-	hobby_graph = make_graph(512); //graph stores all the hobbies,there are 256 possibilities
-}
-void choose_hobby(Graph g, int id) //function which genereates a boolean string in int form of the hobbies choosen
+/***************************************************************
+ * choose_hobby take the string of hobbies from the user and stores the 
+ * hobbies in a frerquncy array of hobbies.(Array that checks if the hobby is
+ *                                                    choosen by the user)
+ * Then a binary string is constructed from the frequency array.
+ * e.g, if user chooses 2,5,7
+ * a frequency array is constructed and the boolen string obtained is 01001010
+ * Now in the graph(adjacecy list) containing verties (different boolen string permutations)
+ * the edge is added. 
+ * **************************************************************/
+void choose_hobby(Graph g, int id) 
 {
 	char choosen[25];
 	scanf("%s", choosen);
@@ -75,7 +81,7 @@ void create_user(Graph g) //reads and stores the data of the user
 	printf("6) Gaming\n");
 	printf("7) Anime\n");
 	printf("8) Programming\n");
-	choose_hobby(g, id);	
+	choose_hobby(g, id);
 	printf("Your Registration is complete and your assigned id is %d\n", id);
 	g.Head[id].userExistence = 1;
 }
@@ -90,6 +96,19 @@ void init_hobby() //initialises the hobbies in the database
 	strcpy(list_hobbies[6].hobby, "Anime");
 	strcpy(list_hobbies[7].hobby, "Programming");
 }
+/*******************************************************
+ * hobby_recommend finds the users with most common hobbies in a efficient manner.
+ * e.g, if the user string is 00100110
+ * Part 1: (All hobbies of the user are covered)
+ *   We replace all the 0's in the string with 1's 
+ *   Here there are 5 0's so , 32 combinations of the string.
+ *   We also store these permutations.
+ * Part 2 : (Some hobbies are removed)
+ *   We remove 1's from the main string and replace them with 0's.
+ *   There are 3 1's and so 2^3 -1 combinations.
+ * For each combinations, we again permute the 0's(from the stored array)
+ * So , all the possible combinations are covered in a efficient manner.
+ * ******************************************************/
 int hobby_recommend(Graph g, int id, int arr[], int number)
 {
 	int count[512] = {};
@@ -275,39 +294,36 @@ void display_details(Graph g, int userID)
 {
 	printf("Name is %s", g.Head[userID].name);
 	printf("City of location of user: %s", g.Head[userID].city);
-<<<<<<< HEAD
-
-=======
+    
 	int flag = 0;
 	printf("Hobbies : ");
-	for(int i=0;i<8;i++)
-		if(g.Head[userID].hobbies[i]){
+	for (int i = 0; i < 8; i++)
+		if (g.Head[userID].hobbies[i])
+		{
 			printf("%s ", list_hobbies[i]);
 			flag = 1;
 		}
 
-	if(!flag)
-		printf("None");	
->>>>>>> 7786c48a4f0b5f6dbedbf0475020689034324180
+	if (!flag)
+		printf("None");
 }
 void update_details()
 {
 }
 void friendship_status()
 {
-
 }
 void initialise() //all initalisation goes here
 {
 	push(&next_id, 0);
 	init_hobby();
-	hobby_array();
+	hobby_graph = make_graph(512); //graph stores all the hobbies,there are 512 possibilities
+}
 }
 void delete_user(Graph g, int id)
 {
 	DeleteVertex(g, id);
 	push(&next_id, id);
-
 }
 void user_login(Graph g)
 {
@@ -387,7 +403,7 @@ void user_login(Graph g)
 			case 6:
 			{
 				// deletes user
-				Remove_user(g, user_id);
+				delete_user(g, user_id);
 				return;
 				break;
 			}
@@ -419,125 +435,5 @@ int main()
 	create_user(alpha);
 	create_user(alpha);
 	recommendations(alpha, 0);
-	display_details(alpha,0);
-
+	display_details(alpha, 0);
 }
-<<<<<<< HEAD
-=======
-void user_login(Graph g)
-{
-    int user_id,user_choice;
-    scanf("%d",&user_id);
-    printf("\n\t Please Enter User ID\n");
-    //if the user id doesn't exist, It displays error message and terminates function
-    if(g.Head[user_id].userExistence==0)
-    {
-        printf("\n\t***  The USER ID entered is INVALID. You Don't Exist in our World :((  ***\n");
-        return;
-    }
-    if(strcmp(g.Head[user_id].password,encrypt_pass(&g.Head[user_id])==0)
-    {
-        printf("\n\t1)\tAdd Friends (YAY ;P)\n\t2)\tRemove Friend (ono)\n\t3)\tCheck Friendlist :p\n");
-        printf("\t4)\tLook-up User ID :o\n\t5)\tLOG OUT :// \n\t6)\tDelete Account  :???\n");
-        do
-        {
-            switch(user_choice)
-            {
-                case 1:
-                {
-                    int new_frnd;   //  Take user_id of friend-to-be
-                    scanf("%d",&new_frnd);
-                    if(g.Head[new_frnd].userExistence==0)
-                    {
-                        printf("\n\t***  The User ID doesn't exist. Imaginary Friends FTW !  ***\n");
-                    }
-                    else
-                    {
-                        StartFollowing(g,user_id,new_frnd);//Adds friend
-                        printf("\n\tYAY You have a NEW Friend XD\n");
-                    }
-                    break;
-                }
-                case 2:
-                {
-                    int no_more_frnd;
-                    scanf("%d",&no_more_frnd);
-                    if(g.Head[no_more_frnd].userExistence==0)
-                    {
-                        printf("\n\t***  The USER ID doesn't exist. Fighting with your Imagiinary Friends again?  ***\n");
-                    }
-                    else
-                    {
-                        Unfriend(g,user_id,no_more_frnd);   //  Removes Friend
-                        printf("\n\tUnfriended Successfully !!\n");
-                    }
-                    break;
-                }
-                case 3:
-                {
-                    checkFriendlist(g,user_id);
-                    break;
-                }
-                case 4:
-                {
-                    int look_user;   //  Take user_id of user to look up
-                    scanf("%d",&look_user);
-                    if(g.Head[look_user]userExistence==0)
-                    {
-                        printf("\n\t***  The User ID doesn't exist. File a Missing Persons Report !?  ***\n");
-                    }
-                    else
-                    {
-                        LookUpUser(g,user_id,look_user); //  Displays details
-                    }
-                    break;
-                }
-                case 5:
-                {
-                    // logs-out user and terminates function
-                    printf("\n\t***  LOG-OUT SUCCESSFUL ! See You On The Other Side  ***\n");
-                    return;
-                    break;
-                }
-                case 6:
-                {
-                    // deletes user
-                    Remove_user(g,user_id);
-                    return;
-                    break;
-                }
-                default:
-                {
-                    printf("\n Blurry Vision? Time to visit an Optometrist? Or some Coffee?\n\n");
-                    break;
-                }
-            }
-        }while(user_choice!=5 || user_choice!=6);
-    }
-    //if the password is incorrect, access is denied and function is terminated
-    else
-    {
-        printf("\n\t*** The Password is INCORRECT !! You looking for Trouble? Or Almonds? ***");
-        return;
-    }
-    return;
-}
-int main()
-{
-	Graph alpha;
-	alpha = CreateGraph(10);
-}
-// int main()
-// {
-// 	initialise();
-// 	hobby_array();
-// 	Graph alpha = CreateGraph(8);
-// 	create_user(alpha);
-// 	create_user(alpha);
-// 	create_user(alpha);
-// 	create_user(alpha);
-// 	create_user(alpha);
-// 	create_user(alpha);
-// 	recommendations(alpha, 0);
-// }
->>>>>>> 7786c48a4f0b5f6dbedbf0475020689034324180
