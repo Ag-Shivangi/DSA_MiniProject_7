@@ -1,10 +1,6 @@
 #include "struct.h"
 // Takes the pointer to a user node  and returns string
-<<<<<<< HEAD
-char *encrypt_pass(GraphNode *user_node)
-=======
 char * encrypt_pass(GraphNode* user_node)
->>>>>>> 7786c48a4f0b5f6dbedbf0475020689034324180
 {
     char salt[] = "$1$3456789";
     salt[3] = user_node->name[0];
