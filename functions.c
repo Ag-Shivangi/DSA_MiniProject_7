@@ -186,73 +186,82 @@ int hobby_recommend(Graph g, int id, int arr[], int number)
 	}
 	return number;
 }
+
 int bfs(Graph g, int begin, int arr[])
 {
-	int n = 0;
+    int n = 0; // If the no.of friends we get through bfs is less than 10
+               // then we use n -> no.of friends obtained by bfs
+               // We do bfs only till n<=10
 
-	int x = g.numVertices;
+    int x = g.numVertices;
 
-	int visited[x];
-	int adjvisited[x];
+    int visited[x]; // An array to keep track of the visited vertices
 
-	for (int i = 0; i < x; i++)
-	{
-		visited[i] = 0;
-	}
+    int adjvisited[x]; // An array to tell whether a person is a direct friend of begin or not
+                       // Begin and the adjacent vertices of begin are marked 1
+                       // So that they won't get stored in the array, and the frinens of a
+                       //person are not recommended again.
+                       // If adjvisited[i] = 0 then i is not a direct friend of begin and i != x
+                       // If adjvisited[j] = 0 then j is either a direct friend of begin or j == x
+    for (int i = 0; i < x; i++)
+    {                   // In visited[x] array
+        visited[i] = 0; // 0 indictes that the vertex is not visited
+    }                   // -1 indicates that the vertex is in the queue
+                        // 1 indicates that the vertex is visited
 
-	PtrQueue q = CreateQueue();
+    PtrQueue q = CreateQueue();
 
-	Enqueue(q, begin);
+    Enqueue(q, begin);
 
-	GraphNode temp = g.Head[begin];
+    GraphNode temp = g.Head[begin];
 
-	int t = temp.numEdges;
+    int t = temp.numEdges;
 
-	int l = t;
+    int l = t;
 
-	while (t != 0)
-	{
-		int adjacent = temp.parent[l - t];
-		adjvisited[adjacent] = 1;
-		t--;
-	}
+    while (t != 0)
+    {
+        int adjacent = temp.parent[l - t];
+        adjvisited[adjacent] = 1;
+        t--;
+    } // Begin and the adjacent vertices of begin are marked 1
 
-	adjvisited[begin] = 1;
+    adjvisited[begin] = 1;
 
-	while (IsEmpty(q) != 1 && n <= 10)
-	{
-		int top = Dequeue(q);
+    while (IsEmpty(q) != 1 && n <= 10)
+    {
+        int top = Dequeue(q);
 
-		visited[top] = 1;
+        visited[top] = 1;
 
-		if (adjvisited[top] != 1)
-		{
-			arr[n] = top;
-			n++;
-		}
+        if (adjvisited[top] != 1) // The top of Dequeue is stored in arr if
+        {                         // he is not a direct friend of begin
+            arr[n] = top;
+            n++; // Increment n;
+        }
 
-		GraphNode x = g.Head[top];
+        GraphNode x = g.Head[top];
 
-		int t = x.numEdges;
-		int l = t;
+        int t = x.numEdges;
+        int l = t;
 
-		while (t != 0)
-		{
-			int adjacent = x.parent[l - t];
+        while (t != 0) // for all the adjacent vertices of top we repeat the process
+        {
+            int adjacent = x.parent[l - t];
 
-			if (visited[adjacent] == 0)
-			{
-				visited[adjacent] = -1;
-				Enqueue(q, adjacent);
-			}
-			t--;
-		}
-	}
-	if (n < 10)
-	{
-		hobby_recommend(g, begin, arr, n);
-	}
-	return n;
+            if (visited[adjacent] == 0) // if that vertex is not visited
+            {
+                visited[adjacent] = -1; // -1 indicates that the number is in the queue
+                Enqueue(q, adjacent);   // Enqueue that vertex
+            }
+            t--;
+        }
+    }
+    if (n < 10) // If n is less than 10 then we call the hobby_recommend function
+    {
+        hobby_recommend(g, begin, arr, n);
+    }
+    return n;
 }
 
 void recommendations(Graph g, int id) //function that returns the recommended friends
