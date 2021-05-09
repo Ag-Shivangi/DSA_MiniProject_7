@@ -62,12 +62,12 @@ void create_user(Graph g) //reads and stores the data of the user
 		resize_graph(&g);
 	}
 	push(&next_id, id + 1);
-	// printf("Enter you name : \n");
+	printf("Enter you name : \n");
 	scanf("%s[^\n]", g.Head[id].name);
-	// printf("Enter your city : \n");
+	printf("Enter your city : \n");
 	scanf("%s[^\n]", g.Head[id].city);
-	// printf("Enter you birthday (format: dd/mm/yyyy): \n");
-	scanf("%d/%d/%d ", &g.Head[id].date, &g.Head[id].month, &g.Head[id].year);
+	printf("Enter you birthday (format: dd/mm/yyyy): \n");
+	scanf("%d/%d/%d", &g.Head[id].date, &g.Head[id].month, &g.Head[id].year);
 	printf("Enter you choice of hobbies (x,y,z):\n");
 	printf("1) Painting\n");
 	printf("2) Dance\n");
@@ -334,7 +334,7 @@ void common_hobbies(Graph g, int v1, int v2)//takes the boolean strings and \
         k++;
 	} 
 	k=0;
-	print("The hobbies in common are :\n");
+	printf("The hobbies in common are :\n");
 	for(int i=0;i<8;i++)
 	{
         if(count[i]==1)
