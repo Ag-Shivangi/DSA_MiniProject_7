@@ -346,7 +346,7 @@ void user_login(Graph g)
     if(strcmp(g.Head[user_id].password,encrypt_pass(&g.Head[user_id]))==0)
     {
         printf("\n\t1)\tAdd Friends (YAY ;P)\n\t2)\tRemove Friend (ono)\n\t3)\tCheck Friendlist :p\n");
-        printf("\t4)\tLook-up User ID :o\n\t5)\tLOG OUT :// \n\t6)\tDelete Account  :???\n");
+        printf("\t4)\tLook-up User ID :o\n\t5)\tCheck Recommendations ;)\n\t6)\tLOG OUT :// \n\t7)\tDelete Account  :???\n");
         do
         {
             switch(user_choice)
@@ -400,14 +400,20 @@ void user_login(Graph g)
                     }
                     break;
                 }
-                case 5:
+		case 5:
+		{
+		    //displays recommendations
+		    recommendations(g,user_id);
+		    break;
+		}			    
+                case 6:
                 {
                     // logs-out user and terminates function
                     printf("\n\t***  LOG-OUT SUCCESSFUL ! See You On The Other Side  ***\n");
                     return;
                     break;
                 }
-                case 6:
+                case 7:
                 {
                     // deletes user
                     delete_user(g,user_id);
@@ -420,7 +426,7 @@ void user_login(Graph g)
                     break;
                 }
             }
-        }while(user_choice!=5 || user_choice!=6);
+        }while(user_choice!=7 || user_choice!=6);
     }
     //if the password is incorrect, access is denied and function is terminated
     else
