@@ -278,7 +278,7 @@ void display_details(Graph g, int userID)
 	printf("Hobbies : ");
 	for(int i=0;i<8;i++)
 		if(g.Head[userID].hobbies[i]){
-			printf("%s ", list_hobbies->hobby[i]);
+			printf("%s ", list_hobbies[i].hobby);
 			flag = 1;
 		}
 

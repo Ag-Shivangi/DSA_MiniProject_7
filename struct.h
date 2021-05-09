@@ -21,6 +21,8 @@ typedef struct array_hobby
 {
     char hobby[25];
 } array_hobby;
+
+char *encrypt_pass(GraphNode *user_node);
 // typedef struct ActualGraph
 // {
 //     struct GraphNode *Head;
