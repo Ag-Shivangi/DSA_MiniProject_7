@@ -102,13 +102,15 @@ int BinarySearch(int* arr, int low, int high, int find){
 	return -1;
 }
 int CheckFriendshipStatus(Graph g, int v1, int v2){
-
+        if(g.Head[v1].userExistence && 	g.Head[v2].userExistence)
+	{
 	int check = BinarySearch(g.Head[v1].parent, 0, g.Head[v1].numEdges-1, v2);
 
 	if(check==-1)
 		return 0;
 	else 
 		return 1;
+         }
 }
 
 int* DjikstraAlgo(Graph g, GraphNode ref){
