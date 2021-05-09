@@ -35,6 +35,14 @@ void SwapTouple(Touple *t1, Touple *t2){
 }
 
 
+PtrQueueNode NewQueueNode(int element)
+{
+    PtrQueueNode Q = (PtrQueueNode)malloc(sizeof(StrQueueNode));
+    Q->num = element;
+    Q->next = NULL;
+    return Q;
+}
+
 PQueue InitializePQueue(){
     PQueue pq;
     pq = malloc(sizeof(struct PriorityQueue));
