@@ -15,7 +15,7 @@ hobby *make_graph(int v) //simple graph
 	fo(i, v) temp->array[i].head = NULL;
 	return temp;
 }
-void make_edge(hobby *alpha, int e1, int e2)
+void make_edge(hobby *alpha, int e1, int e2)//simple graph , make edge
 {
 	ad_node *temp = (ad_node *)malloc(sizeof(ad_node));
 	temp->vertex = e2;
@@ -44,7 +44,7 @@ void choose_hobby(Graph g, int id)
 			count[choosen[i] - '1'] = 1;
 		}
 	}
-	fo(i, 8)
+	fo(i, 8)// copies
 	{
 		g.Head[id].hobbies[i] = count[i];
 	}
@@ -300,13 +300,12 @@ void display_details(Graph g, int userID)
 {
 	printf("Name is %s", g.Head[userID].name);
 	printf("City of location of user: %s", g.Head[userID].city);
-    
 	int flag = 0;
 	printf("Hobbies : ");
 	for (int i = 0; i < 8; i++)
 		if (g.Head[userID].hobbies[i])
 		{
-			printf("%s ", list_hobbies[i]);
+			printf("%s ", list_hobbies[i].hobby);
 			flag = 1;
 		}
 
@@ -316,15 +315,17 @@ void display_details(Graph g, int userID)
 void update_details()
 {
 }
-void friendship_status()
+void friendship_status(Graph g,int v1, int v2)
 {
+	 
+	
+    
 }
 void initialise() //all initalisation goes here
 {
 	push(&next_id, 0);
 	init_hobby();
 	hobby_graph = make_graph(512); //graph stores all the hobbies,there are 512 possibilities
-}
 }
 void delete_user(Graph g, int id)
 {
@@ -375,14 +376,14 @@ void user_login(Graph g)
                     }
                     else
                     {
-                        Unfriend(g,user_id,no_more_frnd);   //  Removes Friend
+                        //Unfriend(g,user_id,no_more_frnd);   //  Removes Friend
                         printf("\n\tUnfriended Successfully !!\n");
                     }
                     break;
                 }
                 case 3:
                 {
-                    checkFriendlist(g,user_id);
+                    //checkFriendlist(g,user_id);
                     break;
                 }
                 case 4:
@@ -409,7 +410,7 @@ void user_login(Graph g)
                 case 6:
                 {
                     // deletes user
-                    Remove_user(g,user_id);
+                    delete_user(g,user_id);
                     return;
                     break;
                 }
