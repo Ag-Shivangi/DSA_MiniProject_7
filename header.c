@@ -120,41 +120,33 @@ Touple PopMin(PQueue pq){
     return temp;
 }
 
-PtrQueueNode NewQueueNode(int element)
-{
-    PtrQueueNode Q = (PtrQueueNode)malloc(sizeof(StrQueueNode));
-    Q->num = element;
-    Q->next = NULL;
-    return Q;
-}
-
-PtrQueue CreateQueue()
+PtrQueue CreateQueue() // Creates an empty queue
 {
     PtrQueue pq = (PtrQueue)malloc(sizeof(StrQueue));
     pq->front = NULL;
     pq->rear = NULL;
 }
 
-void Enqueue(PtrQueue q, int element)
+void Enqueue(PtrQueue q, int element) // It adds an element to the queue from the rear side
 {
     PtrQueueNode x = NewQueueNode(element);
 
-    if (q->rear == NULL)
+    if (q->rear == NULL) // If the queue is empty
     {
         q->front = x;
         q->rear = x;
     }
 
-    else
+    else                 // If the queue is not empty
     {
         q->rear->next = x;
         q->rear = x;
     }
 }
 
-int Dequeue(PtrQueue q)
+int Dequeue(PtrQueue q)  // It deletes an element from the queue(from the front side)
 {
-    if (q->front != NULL)
+    if (q->front != NULL)   // If the queue is not empty
     {
         PtrQueueNode x = q->front;
 
@@ -167,7 +159,7 @@ int Dequeue(PtrQueue q)
             q->rear = NULL;
         }
 
-        free(x);
+        free(x);           // Frees that node
 
         return i;
     }
@@ -176,11 +168,10 @@ int Dequeue(PtrQueue q)
         return -1;
 }
 
-int IsEmpty(PtrQueue q)
+int IsEmpty(PtrQueue q)  // It checks whether the queue is empty
 {
     if (q->front == NULL && q->rear == NULL)
         return 1;
     else
         return 0;
 }
-
