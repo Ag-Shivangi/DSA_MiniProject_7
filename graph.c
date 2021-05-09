@@ -44,8 +44,7 @@ void StartFollowing(Graph g, int v1, int v2){	//v1 starts following v2
 
 		temp--;
 	}
-
-
+	
 	g.Head[v1].EdgeLen[g.Head[v1].numEdges] = 1;
 	g.Head[v1].numEdges++;
 
@@ -259,8 +258,6 @@ void LookUpUser(Graph g,int currID ,int userID){
 		
 	printf("Name of user : %s", g.Head[userID].name);
 	printf("City of location of user: %s", g.Head[userID].city);
-
-	
 }
 
 void RemoveEdge(Graph g, int v1, int v2){	//v2 is removed from follow list of v1, as in v1 is not following v2 anymore
