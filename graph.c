@@ -32,20 +32,6 @@ void StartFollowing(Graph g, int v1, int v2){	//v1 starts following v2
 	}
     
 	g.Head[v1].parent[g.Head[v1].numEdges] = v2;
-
-	int temp = g.Head[v1].numEdges;
-
-	while(temp>=0){
-		if(g.Head[v1].parent[temp]<g.Head[v1].parent[temp-1]){
-			int temp = g.Head[v1].parent[temp];
-			g.Head[v1].parent[temp] = g.Head[v1].parent[temp-1];
-			g.Head[v1].parent[temp-1] = temp;
-		}
-
-		temp--;
-	}
-
-
 	g.Head[v1].EdgeLen[g.Head[v1].numEdges] = 1;
 	g.Head[v1].numEdges++;
 
@@ -87,30 +73,7 @@ void PrintGraph(Graph g){
 	}
 }
 
-int BinarySearch(int* arr, int low, int high, int find){
 
-	while(low<=high){
-		int mid = (low+high)/2;
-
-		if(arr[mid] == find)
-			return mid;
-		else if(arr[mid]<find)
-			low = mid+1;
-		else if(find>=arr[mid])
-			high = mid;
-	}
-
-	return -1;
-}
-int CheckFriendshipStatus(Graph g, int v1, int v2){
-
-	int check = BinarySearch(g.Head[v1].parent, 0, g.Head[v1].numEdges-1, v2);
-
-	if(check==-1)
-		return 0;
-	else 
-		return 1;
-}
 
 int* DjikstraAlgo(Graph g, GraphNode ref){
 	PQueue internal;
@@ -259,8 +222,6 @@ void LookUpUser(Graph g,int currID ,int userID){
 		
 	printf("Name of user : %s", g.Head[userID].name);
 	printf("City of location of user: %s", g.Head[userID].city);
-
-	
 }
 
 void RemoveEdge(Graph g, int v1, int v2){	//v2 is removed from follow list of v1, as in v1 is not following v2 anymore
