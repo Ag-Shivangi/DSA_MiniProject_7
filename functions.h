@@ -27,11 +27,13 @@ void StartFollowing(Graph g, int v1, int v2);
 
 void resize_grpah(Graph* g);
 
-void choose_hobby(Graph g, int id);
+int choose_hobby(Graph g, int id);
 
 void create_user(Graph g);
 
 void init_hobby();
+
+void delete_user(Graph g, int id);
 
 int hobby_recommend(Graph g, int id, int arr[], int n);
 
