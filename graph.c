@@ -1,5 +1,6 @@
 #include "graph.h"
-#include "header.h"
+#include "struct.h"
+
 
 Graph CreateGraph(int size){//Creates the intial graph
 	Graph resultGraph;
@@ -258,8 +259,11 @@ void LookUpUser(Graph g,int currID ,int userID){
 	if(check!=INT_MAX)
 		printf("%d is a %d degree friend\n", userID, check);
 		
-	printf("Name of user : %s", g.Head[userID].name);
-	printf("City of location of user: %s", g.Head[userID].city);
+	// printf("Name of user : %s\n", g.Head[userID].name);
+	// printf("City of location of user: %s", g.Head[userID].city);
+
+	display_details(g, userID);
+	common_hobbies(g, currID, userID);
 }
 
 void RemoveEdge(Graph g, int v1, int v2){	//v2 is removed from follow list of v1, as in v1 is not following v2 anymore

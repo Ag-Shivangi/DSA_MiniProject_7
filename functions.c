@@ -82,6 +82,7 @@ void create_user(Graph g) //reads and stores the data of the user
 	choose_hobby(g, id);
 	printf("Your Registration is complete and your assigned id is %d\n", id);
 	g.Head[id].userExistence = 1;
+	g.Head[id].vertexID = id;
 }
 void init_hobby() //initialises the hobbies in the database
 {
@@ -312,7 +313,7 @@ void recommendations(Graph g, int id) //function that returns the recommended fr
 }
 void display_details(Graph g, int userID)
 {
-	printf("Name is %s", g.Head[userID].name);
+	printf("Name is %s\n", g.Head[userID].name);
 	printf("City of location of user: %s", g.Head[userID].city);
 	int flag = 0;
 	printf("Hobbies : ");

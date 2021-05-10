@@ -50,4 +50,6 @@ void initialise();
 char *encrypt_pass(GraphNode *user_node);
 
 void user_login(Graph g);
+
+void common_hobbies(Graph g, int v1, int v2);
 #endif
