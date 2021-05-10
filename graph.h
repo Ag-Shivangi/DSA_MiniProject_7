@@ -17,7 +17,7 @@ typedef struct GraphNode
 
 	char name[30];
 	char city[30];
-	char password[21];
+	char password[35];
 	//birthday details
 	int date;
 	int month;
