@@ -9,7 +9,7 @@ int main()
     initialise(); //all initalisation goes here    
     int n = 256, user_choice, user_count = 0; //n=size of the user array(preferably a power of 2)
     Graph graph = CreateGraph(n);
-    printf("\n  BONJOUR! WELCOME TO THE FRIENDS RECCOMENDATION SYSTEM \n\n");
+    printf("\n\t  BONJOUR! WELCOME TO THE FRIENDS RECCOMENDATION SYSTEM \n\n");
     do
     {
         printf("\t********************************************************\n\n");
