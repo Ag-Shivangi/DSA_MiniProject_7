@@ -181,6 +181,8 @@ void DeleteVertex(Graph g, int vertex){
 	g.Head[vertex].parent = (int*)malloc(sizeof(int));
 	g.Head[vertex].EdgeLen = (int*)malloc(sizeof(int));
 
+	g.Head[vertex].userExistence = 0;
+
 }
 
 
