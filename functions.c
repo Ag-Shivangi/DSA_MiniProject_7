@@ -1,7 +1,6 @@
 
 #include "struct.h"
 #include <math.h>
-
 array_hobby list_hobbies[8]; //stores hobby names
 stack *next_id;
 hobby *hobby_graph;
@@ -67,7 +66,7 @@ void create_user(Graph g) //reads and stores the data of the user
 	printf("New Password :\n");
 	scanf("%s", g.Head[id].password);
 	printf("Enter your city : \n");
-	scanf("%s[^\n]", g.Head[id].city);	
+	scanf("%s[^\n]", g.Head[id].city);
 	printf("Enter you birthday (format: dd/mm/yyyy): \n");
 	scanf("%d/%d/%d", &g.Head[id].date, &g.Head[id].month, &g.Head[id].year);
 	printf("Enter you choice of hobbies (x,y,z):\n");
@@ -150,70 +149,95 @@ int hobby_recommend(Graph g, int id, int arr[], int number)
 		ad_node *point = hobby_graph->array[num].head;
 		while (point != NULL)
 		{
-			if (point->vertex != id)
+			if (CheckFriendshipStatus(g, id, point->vertex))
 			{
-				arr[number] = point->vertex;
-				if (number == 10)
-					break;
-				number++;
+				if (point->vertex != id)
+				{
+					int flag = 1;
+					fo(po, number)
+					{
+						if (arr[po] == point->vertex)
+							flag = 0;
+					}
+					if (flag)
+					{
+						arr[number] = point->vertex;
+						if (number == 10)
+							break;
+						number++;
+					}
+				}
 			}
 			point = point->next;
 		}
 	}
 	int tn = 0; //=8 - n;
-	
+
 	for (int i = 0; i < 8; i++)
 	{
 		if (g.Head[id].hobbies[i] == 1)
 			tn++;
 	}
-	
+
 	if (number < 10)
 	{
 		for (int zi = pow(2, tn) - 2; zi >= 0; zi--)
 		{
-			for(int ko=pow(2, n)-1;ko>=0;ko--)
+			for (int ko = pow(2, n) - 1; ko >= 0; ko--)
 			{
-			fo(i, 8)
-				temp[i] = g.Head[id].hobbies[i]; //copies the main boolen string
-			int j = 0, m = zi, k = 0;
-			int count[8];
-			fo(li, 8)
-				count[li] = 0;
-			while (m != 0) //converts iter to binary
-			{
-				count[k] = m % 2;
-				m = m / 2;
-				k++;
-			}
-			k = 0;
-			int x =0;
-			fo(i, 8) //finds the permuted binary string
-			{
-				if (temp[i] == 1){
-					temp[i] = count[k];
+				fo(i, 8)
+					temp[i] = g.Head[id].hobbies[i]; //copies the main boolen string
+				int j = 0, m = zi, k = 0;
+				int count[8];
+				fo(li, 8)
+					count[li] = 0;
+				while (m != 0) //converts iter to binary
+				{
+					count[k] = m % 2;
+					m = m / 2;
 					k++;
 				}
-				else{
-					temp[i] = store[ko].count[x];
-					x++;
+				k = 0;
+				int x = 0;
+				fo(i, 8) //finds the permuted binary string
+				{
+					if (temp[i] == 1)
+					{
+						temp[i] = count[k];
+						k++;
+					}
+					else
+					{
+						temp[i] = store[ko].count[x];
+						x++;
+					}
 				}
-				
-			}
-			int num = 0;
-			fo(i, 8) //finds the value in decimal after permutation
-			{
-				num = num * 2 + temp[7 - i];
-			}
-			ad_node *point = hobby_graph->array[num].head;
-			while (point != NULL)
-			{
-				arr[number] = point->vertex;
-				if (number == 10)
-					break;
-				number++;
-				point = point->next;
-			}
+				int num = 0;
+				fo(i, 8) //finds the value in decimal after permutation
+				{
+					num = num * 2 + temp[7 - i];
+				}
+				ad_node *point = hobby_graph->array[num].head;
+				while (point != NULL)
+				{
+					if (CheckFriendshipStatus(g, id, point->vertex))
+					{
+						int flag = 1;
+						fo(po, number)
+						{
+							if (arr[po] == point->vertex)
+								flag = 0;
+						}
+						if (flag)
+						{
+							arr[number] = point->vertex;
+							if (number == 10)
+								break;
+							number++;
+						}
+					}
+					point = point->next;
+				}
 			}
 		}
 	}
@@ -304,7 +328,11 @@ void recommendations(Graph g, int id) //function that returns the recommended fr
 		n = hobby_recommend(g, id, friends, 0);
 	}
 	else
+	{
 		n = bfs(g, id, friends);
+		if (n < 10)
+			n = hobby_recommend(g, id, friends, n);
+	}
 	printf("Your friend suggestions are :\n");
 	for (int i = 0; i < n; i++)
 	{
@@ -326,53 +354,25 @@ void display_details(Graph g, int userID)
 
 	if (!flag)
 		printf("None\n");
-	else	
+	else
 		printf("\n");
 }
 void common_hobbies(Graph g, int v1, int v2) //takes the boolean strings and \
                                             then uses AND operator to find the common hobbies
 {
-	// int num1 = 0;
-	// fo(i, 8)
-	// {
-	// 	num1 = num1 * 10 + g.Head[v1].hobbies[7 - i];
-	// }
-	// int num2 = 0;
-	// fo(i, 8)
-	// {
-	// 	num2 = num2 * 10 + g.Head[v2].hobbies[7 - i];
-	// }
-	// int ans = num1 & num2;
-	// int count[8] = {};
-	// int k = 0;
-	// while (ans != 0)
-	// {
-	// 	count[k] = ans % 10;
-	// 	ans = ans / 10;
-	// 	k++;
-	// }
-	// k = 0;
-	// printf("The hobbies in common are :\n");
-	// for (int i = 0; i < 8; i++)
-	// {
-	// 	if (count[i] == 1)
-	// 	{
-	// 		printf("%s\n", list_hobbies[i].hobby);
-	// 		k++;
-	// 	}
-	// }
-	// if (k == 0)
-	// 	printf("None\n");
+
 	int flag = 0;
 	printf("Common Hobbies : ");
-	for(int i=0;i<8;i++){
-		if(g.Head[v1].hobbies[i]&&g.Head[v2].hobbies[i]){
+	for (int i = 0; i < 8; i++)
+	{
+		if (g.Head[v1].hobbies[i] && g.Head[v2].hobbies[i])
+		{
 			printf("%s ", list_hobbies[i].hobby);
 			flag = 1;
 		}
 	}
 
-	if(!flag)
+	if (!flag)
 		printf("Unfortunately none in common.");
 }
 void friendship_status(Graph g, int v1, int v2)
@@ -429,8 +429,9 @@ void user_login(Graph g)
 				}
 				else
 				{
-					if(CheckFriendshipStatus(g, user_id, new_frnd)){
-						printf("sorry! we don't support multiple personality disorder :(");						
+					if (CheckFriendshipStatus(g, user_id, new_frnd))
+					{
+						printf("sorry! we don't support multiple personality disorder :(");
 					}
 					StartFollowing(g, user_id, new_frnd); //Adds friend
 					printf("\n\tYAY You have a NEW Friend XD\n");
@@ -442,7 +443,8 @@ void user_login(Graph g)
 				int no_more_frnd;
 				scanf("%d", &no_more_frnd);
 
-				if(no_more_frnd == user_id){
+				if (no_more_frnd == user_id)
+				{
 					printf("We can't help you resolve issues with yourself");
 					break;
 				}
@@ -455,8 +457,9 @@ void user_login(Graph g)
 				{
 					//Unfriend(g,user_id,no_more_frnd);   //  Removes Friend
 
-					if(!CheckFriendshipStatus(g, user_id, no_more_frnd)){
-						printf("You gotta have friends to actually unfriend");						
+					if (!CheckFriendshipStatus(g, user_id, no_more_frnd))
+					{
+						printf("You gotta have friends to actually unfriend");
 					}
 					RemoveEdge(g, user_id, no_more_frnd);
 					printf("\n\tUnfriended Successfully !!\n");
