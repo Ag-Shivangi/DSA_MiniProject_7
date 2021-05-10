@@ -248,7 +248,7 @@ void resize_graph(Graph* g){
 	int temp = g->numVertices;
 	g->numVertices*=2;
 	g->Head = realloc(g->Head, g->numVertices*sizeof(GraphNode));
-	g->visitedDFS = (int*)calloc(g->numVertices*sizeof(int));
+	g->visitedDFS = (int*)calloc(g->numVertices, sizeof(int));
 
 	for(int i=temp;i<g->numVertices;i++){
 		g->Head[i].numEdges = 0;
