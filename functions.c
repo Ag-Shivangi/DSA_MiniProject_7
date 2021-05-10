@@ -63,10 +63,14 @@ void create_user(Graph g) //reads and stores the data of the user
 	push(&next_id, id + 1);
 	printf("Enter you name : \n");
 	scanf("%s[^\n]", g.Head[id].name);
-	printf("New Password :\n");
-	scanf("%s", g.Head[id].password);
 	printf("Enter your city : \n");
-	scanf("%s[^\n]", g.Head[id].city);
+	scanf("%s[^\n]", g.Head[id].city);yOd6I/CBj/
+yOd6I/CBj/
+yOd6I/CBj/
+yOd6I/CBj/
+yOd6I/CBj/
+
+	strcpy(g.Head[id].password,encrypt_pass(&g.Head[user_id]));
 	printf("Enter you birthday (format: dd/mm/yyyy): \n");
 	scanf("%d/%d/%d", &g.Head[id].date, &g.Head[id].month, &g.Head[id].year);
 	printf("Enter you choice of hobbies (x,y,z):\n");
@@ -400,9 +404,6 @@ void user_login(Graph g)
 	int user_id, user_choice;
 	printf("\n\tPlease Enter User ID\n");
 	scanf("%d", &user_id);
-	char psswd[35];
-	printf("Enter pass:");
-	scanf("%s", psswd);
 	//if the user id doesn't exist, It displays error message and terminates function
 	if (g.Head[user_id].userExistence == 0)
 	{
