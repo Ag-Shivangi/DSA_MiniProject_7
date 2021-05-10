@@ -1,6 +1,7 @@
 
 #include "struct.h"
 #include <math.h>
+
 array_hobby list_hobbies[8]; //stores hobby names
 stack *next_id;
 hobby *hobby_graph;

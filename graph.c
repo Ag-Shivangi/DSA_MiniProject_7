@@ -35,7 +35,7 @@ void StartFollowing(Graph g, int v1, int v2){	//v1 starts following v2
 
 	int temp = g.Head[v1].numEdges;
 
-	while(temp>=0){
+	while(temp>0){
 		if(g.Head[v1].parent[temp]<g.Head[v1].parent[temp-1]){
 			int temp = g.Head[v1].parent[temp];
 			g.Head[v1].parent[temp] = g.Head[v1].parent[temp-1];

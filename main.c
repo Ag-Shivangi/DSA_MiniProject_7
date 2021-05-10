@@ -1,5 +1,9 @@
 #include "struct.h"
 #include "functions.h"
+#include "functions.c"
+#include "graph.c"
+#include "header.c"
+#include "encrypt.c"
 int main()
 {
     initialise(); //all initalisation goes here    

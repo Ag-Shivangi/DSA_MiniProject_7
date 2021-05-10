@@ -8,7 +8,7 @@
 #include <ctype.h>
 #include <limits.h>
 #include <unistd.h>
-#include <crypt.h>
+//#include <crypt.h>
 #include "header.h"
 #include "graph.h"
 #include "functions.h"
