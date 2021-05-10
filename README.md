@@ -54,4 +54,3 @@ Enter an integer according to your choice. If you Enter
 4. Exits program .
 
 **************************************************************************************************************
->>>>>>> 69fe559bd74d232febc35fc132f74f0395f0b21a
