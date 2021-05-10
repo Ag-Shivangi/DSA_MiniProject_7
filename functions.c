@@ -36,11 +36,12 @@ int choose_hobby(Graph g, int id)
 	scanf("%s", choosen);
 	int count[8] = {};
 
-	fo(i, strlen(choosen))
-	{
-		if (choosen[i] != ',')
+	// fo(i, strlen(choosen))
+	// {
+	// 	if (choosen[i] != ',')
+		for(int i=0;i<strlen(choosen);i+=2)
 		{
-			if ((choosen[i]-'0') <= 8 && i+2<strlen(choosen) && (choosen[i+1]==',') )
+			if ((choosen[i]-'0') <= 8)
 				count[choosen[i] - '1'] = 1;
 			else
 			{
@@ -49,7 +50,7 @@ int choose_hobby(Graph g, int id)
 				return -1;
 			}
 		}
-	}
+	
 	fo(i, 8) // copies
 	{
 		g.Head[id].hobbies[i] = count[i];
