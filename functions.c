@@ -30,22 +30,23 @@ void make_edge(hobby *alpha, int e1, int e2) //simple graph , make edge
  * Now in the graph(adjacecy list) containing verties (different boolen string permutations)
  * the edge is added. 
  * **************************************************************/
-void choose_hobby(Graph g, int id)
+int choose_hobby(Graph g, int id)
 {
 	char choosen[25];
 	scanf("%s", choosen);
 	int count[8] = {};
-l1:
+
 	fo(i, strlen(choosen))
 	{
 		if (choosen[i] != ',')
 		{
-			if (choosen[i] <= )
+			if (choosen[i] <= 8)
 				count[choosen[i] - '1'] = 1;
 			else
 			{
 				printf("\tWrong hobby entered ! Registration failed , choose something mainstream\n");
-				goto l1;
+				delete_user(g, id);
+				return -1;
 			}
 		}
 	}
@@ -84,7 +85,9 @@ void create_user(Graph g) //reads and stores the data of the user
 	printf("6) Gaming\n");
 	printf("7) Anime\n");
 	printf("8) Programming\n");
-	choose_hobby(g, id);
+	if(choose_hobby(g, id)==-1)
+		return;
+	
 	printf("Your Registration is complete and your assigned id is %d\n", id);
 	g.Head[id].userExistence = 1;
 	g.Head[id].vertexID = id;
