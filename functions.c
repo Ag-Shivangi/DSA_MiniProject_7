@@ -430,7 +430,7 @@ void user_login(Graph g)
 				else
 				{
 					if(CheckFriendshipStatus(g, user_id, new_frnd)){
-						printf("sorry! we don't support multiple personality disorder :(");						
+						printf("The user is your friend! Shouldn't you already be knowing that !?");						
 					}
 					StartFollowing(g, user_id, new_frnd); //Adds friend
 					printf("\n\tYAY You have a NEW Friend XD\n");
