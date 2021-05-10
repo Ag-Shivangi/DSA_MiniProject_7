@@ -414,7 +414,7 @@ void user_login(Graph g)
 
 		do
 		{
-			printf("\n/t** What do you wanna do today? **\n\t1)\tAdd Friends (YAY ;P)\n\t2)\tRemove Friend (ono)\n\t3)\tCheck Friendlist :p\n");
+			printf("\n\t** What do you wanna do today? **\n\t1)\tAdd Friends (YAY ;P)\n\t2)\tRemove Friend (ono)\n\t3)\tCheck Friendlist :p\n");
 			printf("\t4)\tLook-up User ID :o\n\t5)\tCheck Recommendations ;)\n\t6)\tLOG OUT :// \n\t7)\tDelete Account  :???\n");
 			scanf("%d", &user_choice);
 			switch (user_choice)
