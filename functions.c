@@ -40,7 +40,7 @@ int choose_hobby(Graph g, int id)
 	{
 		if (choosen[i] != ',')
 		{
-			if ((choosen[i]-'0') <= 8)
+			if ((choosen[i]-'0') <= 8 && i+1<strlen(choosen) && (choosen[i+1]==',') )
 				count[choosen[i] - '1'] = 1;
 			else
 			{
