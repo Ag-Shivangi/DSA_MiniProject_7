@@ -400,6 +400,9 @@ void user_login(Graph g)
 	int user_id, user_choice;
 	printf("\n\t Please Enter User ID\n");
 	scanf("%d", &user_id);
+	char psswd[35];
+	printf("Enter pass:");
+	scanf("%s", psswd);
 	//if the user id doesn't exist, It displays error message and terminates function
 	if (g.Head[user_id].userExistence == 0)
 	{
@@ -438,13 +441,23 @@ void user_login(Graph g)
 			{
 				int no_more_frnd;
 				scanf("%d", &no_more_frnd);
+
+				if(no_more_frnd == user_id){
+					printf("We can't help you resolve issues with yourself");
+					break;
+				}
 				if (g.Head[no_more_frnd].userExistence == 0)
 				{
 					printf("\n\t***  The USER ID doesn't exist. Fighting with your Imagiinary Friends again?  ***\n");
+					break;
 				}
 				else
 				{
 					//Unfriend(g,user_id,no_more_frnd);   //  Removes Friend
+
+					if(!CheckFriendshipStatus(g, user_id, no_more_frnd)){
+						printf("You gotta have friends to actually unfriend");						
+					}
 					RemoveEdge(g, user_id, no_more_frnd);
 					printf("\n\tUnfriended Successfully !!\n");
 				}
