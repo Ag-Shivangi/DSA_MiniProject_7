@@ -37,6 +37,7 @@ Enter an integer according to your choice. If you Enter
    The following details are asked: name,city,birthday, password and hobbies.
    The name has to be atleast 4 characters and a maximum of 29 characters. 
    The city has to be atleast 2 characters and a maximum of 29 characters.
+   The hobbies have to entered separated by commas (Eg: 1,2,6)
    The program returns an user ID.
    (The data is stored in a dynamic array and the password is encrypted using MD5 algorithm and stored)
 
