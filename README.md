@@ -4,10 +4,10 @@
 **************************************************************************************************************
 GROUP 7
 
-Venika Sruthi (2020101072)\n
-Shavak Kansal (2020101023)\n
-Shivangi Agarwal (2020113011)\n
-Venneti Sri Satya Vinay (2020101066)\n
+Venika Sruthi (2020101072)
+Shavak Kansal (2020101023)
+Shivangi Agarwal (2020113011)
+Venneti Sri Satya Vinay (2020101066)
 Manaswini Tharigopula(2020113015)
 **************************************************************************************************************
 
@@ -17,7 +17,7 @@ Manaswini Tharigopula(2020113015)
 Link math and crypt while compiling the main file:
     gcc main.c -lm -lcrypt
 
-The following libraries are included\n
+The following libraries are included
 <stdio.h>
 <string.h>
 <stdlib.h>
