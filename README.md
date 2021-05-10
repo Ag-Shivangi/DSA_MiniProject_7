@@ -28,7 +28,7 @@ The following libraries are included
 <unistd.h>
 <crypt.h>
 
-Some of the libraries work only on linux.
+Some of the libraries (unistd.h and crypt.h) work only on linux.
 **************************************************************************************************************
 When you run the code, It will display a menu.
 Enter an integer according to your choice. If you Enter
