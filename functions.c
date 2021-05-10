@@ -72,11 +72,7 @@ void create_user(Graph g) //reads and stores the data of the user
 	scanf("%s[^\n]", g.Head[id].name);
 	printf("Enter your city : \n");
 	scanf("%s[^\n]", g.Head[id].city);
-<<<<<<< HEAD
 	strcpy(g.Head[id].password, encrypt_pass(&g.Head[id]));
-=======
-	strcpy(g.Head[id].password,encrypt_pass(&g.Head[id]));
->>>>>>> 69fe559bd74d232febc35fc132f74f0395f0b21a
 	printf("Enter you birthday (format: dd/mm/yyyy): \n");
 	scanf("%d/%d/%d", &g.Head[id].date, &g.Head[id].month, &g.Head[id].year);
 	printf("Enter you choice of hobbies (x,y,z):\n");
