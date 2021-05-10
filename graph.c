@@ -5,17 +5,17 @@
 Graph CreateGraph(int size){//Creates the intial graph
 	Graph resultGraph;
 
-	resultGraph.numVertices = size;
-	resultGraph.Head = (GraphNode*)malloc(size*sizeof(GraphNode));
-	resultGraph.visitedDFS = (int*)calloc(resultGraph.numVertices, sizeof(int));	
+	resultGraph.numVertices = size;	//makes number of vertices to given size
+	resultGraph.Head = (GraphNode*)malloc(size*sizeof(GraphNode));	//allocate memory for the graphnode array
+	resultGraph.visitedDFS = (int*)calloc(resultGraph.numVertices, sizeof(int));	//visited arr for dijkstra 
 
 	for(int i=0;i<size;i++){
 		resultGraph.Head[i].numEdges = 0;
 		resultGraph.Head[i].maxSize = 1;
-		resultGraph.Head[i].parent = (int*)malloc(sizeof(int));
-		resultGraph.Head[i].EdgeLen = (int*)malloc(sizeof(int));
+		resultGraph.Head[i].parent = (int*)malloc(sizeof(int));	//array for holding the adjacent vertices
+		resultGraph.Head[i].EdgeLen = (int*)malloc(sizeof(int));	//array for holding the  edge lengths(it's going to be 1 in our case)
 		
-		resultGraph.Head[i].no_followers = 0;
+		resultGraph.Head[i].no_followers = 0;	
 		resultGraph.Head[i].maxSize_follower = 1;
 		resultGraph.Head[i].follower = (int*)malloc(sizeof(int));
 		resultGraph.Head[i].userExistence = 0;
@@ -26,7 +26,7 @@ Graph CreateGraph(int size){//Creates the intial graph
 }
 
 void StartFollowing(Graph g, int v1, int v2){	//v1 starts following v2
-	if(g.Head[v1].maxSize == g.Head[v1].numEdges ){//resizes the array of parent if the size exceeds
+	if(g.Head[v1].maxSize == g.Head[v1].numEdges ){	//resizes the array of parent if the size exceeds
 		g.Head[v1].maxSize *= 2;
 		g.Head[v1].parent = (int*)realloc(g.Head[v1].parent ,g.Head[v1].maxSize*sizeof(int));
 		g.Head[v1].EdgeLen = (int*)realloc(g.Head[v1].EdgeLen ,g.Head[v1].maxSize*sizeof(int));
@@ -34,7 +34,7 @@ void StartFollowing(Graph g, int v1, int v2){	//v1 starts following v2
     
 	g.Head[v1].parent[g.Head[v1].numEdges] = v2;
 
-	int temp = g.Head[v1].numEdges;
+	int temp = g.Head[v1].numEdges;	
 
 	while(temp>0){
 		if(g.Head[v1].parent[temp]<g.Head[v1].parent[temp-1]){
@@ -44,7 +44,7 @@ void StartFollowing(Graph g, int v1, int v2){	//v1 starts following v2
 		}
 
 		temp--;
-	}
+	}	//put the given vertex in the correct sorted place in the adjlist.
 	
 	g.Head[v1].EdgeLen[g.Head[v1].numEdges] = 1;
 	g.Head[v1].numEdges++;
@@ -102,7 +102,7 @@ int BinarySearch(int* arr, int low, int high, int find){
 
 	return -1;
 }
-int CheckFriendshipStatus(Graph g, int v1, int v2){
+int CheckFriendshipStatus(Graph g, int v1, int v2){	//uses binary search to find the position of the vertex int he sorted adjacency list
     if(g.Head[v1].userExistence && 	g.Head[v2].userExistence){
 		int check = BinarySearch(g.Head[v1].parent, 0, g.Head[v1].numEdges-1, v2);
 
@@ -116,6 +116,10 @@ int CheckFriendshipStatus(Graph g, int v1, int v2){
 int* DjikstraAlgo(Graph g, GraphNode ref){
 	PQueue internal;
 	internal = InitializePQueue();
+
+	for(int i=0;i<g.numVertices;i++){
+		g.visitedDFS[i]	=  0;
+	}
 
 	int* distance = malloc(g.numVertices*sizeof(int));
 
@@ -156,18 +160,18 @@ int* DjikstraAlgo(Graph g, GraphNode ref){
 }
 
 void DeleteVertex(Graph g, int vertex){
-	for(int k=0;k<g.Head[vertex].maxSize_follower;k++){
+	for(int k=0;k<g.Head[vertex].maxSize_follower;k++){	//goes from the lis tof people of who follow vertex, and delte vertex form the adjlist of those followers
 		int index = -1;
 		
 		int i = g.Head[vertex].follower[k];
 		
 		for(int j=0;j<g.Head[i].numEdges;j++){
 			if(g.Head[i].parent[j]==vertex){
-				index = j;
+				index = j;//finds position 
 			}
 		}
 
-		if(index!=-1)
+		if(index!=-1)	//and shiftsd the array back
 			for(int j=index+1;j<g.Head[i].numEdges;j++)
 				g.Head[i].parent[j-1] = g.Head[i].parent[j];  
 	}
@@ -189,6 +193,10 @@ void DeleteVertex(Graph g, int vertex){
 int DjikstraAlgoModified(Graph g, GraphNode ref, int userID){
 	PQueue internal;
 	internal = InitializePQueue();
+
+	for(int i=0;i<g.numVertices;i++){
+		g.visitedDFS[i]	=  0;
+	}
 
 	int* distance = malloc(g.numVertices*sizeof(int));
 
@@ -240,6 +248,7 @@ void resize_graph(Graph* g){
 	int temp = g->numVertices;
 	g->numVertices*=2;
 	g->Head = realloc(g->Head, g->numVertices*sizeof(GraphNode));
+	g->visitedDFS = (int*)calloc(g->numVertices, sizeof(int));
 
 	for(int i=temp;i<g->numVertices;i++){
 		g->Head[i].numEdges = 0;
@@ -283,7 +292,7 @@ void RemoveEdge(Graph g, int v1, int v2){	//v2 is removed from follow list of v1
 
 }
 
-void PrintFriendList(Graph g, int v1){
+void PrintFriendList(Graph g, int v1){//prints the list of the people who v1 is following
 	for(int i=0;i<g.Head[v1].numEdges;i++){
 		//display_details(g, g.Head[v1].parent[i].vertexID);
 		LookUpUser(g, v1, g.Head[v1].parent[i]);
