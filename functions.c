@@ -1,7 +1,6 @@
 
 #include "struct.h"
 #include <math.h>
-
 array_hobby list_hobbies[8]; //stores hobby names
 stack *next_id;
 hobby *hobby_graph;
@@ -64,8 +63,10 @@ void create_user(Graph g) //reads and stores the data of the user
 	push(&next_id, id + 1);
 	printf("Enter you name : \n");
 	scanf("%s[^\n]", g.Head[id].name);
+	printf("New Password :\n");
+	scanf("%s", g.Head[id].password);
 	printf("Enter your city : \n");
-	scanf("%s[^\n]", g.Head[id].city);
+	scanf("%s[^\n]", g.Head[id].city);	
 	printf("Enter you birthday (format: dd/mm/yyyy): \n");
 	scanf("%d/%d/%d", &g.Head[id].date, &g.Head[id].month, &g.Head[id].year);
 	printf("Enter you choice of hobbies (x,y,z):\n");
@@ -107,7 +108,6 @@ void init_hobby() //initialises the hobbies in the database
  * ******************************************************/
 int hobby_recommend(Graph g, int id, int arr[], int number)
 {
-	int count[512] = {};
 	int temp[8];
 	int n = 0;
 	for (int i = 0; i < 8; i++)
@@ -202,7 +202,6 @@ int hobby_recommend(Graph g, int id, int arr[], int number)
 	}
 	return number;
 }
-
 int bfs(Graph g, int begin, int arr[])
 {
 	int n = 0; // If the no.of friends we get through bfs is less than 10
@@ -311,7 +310,7 @@ void display_details(Graph g, int userID)
 	if (!flag)
 		printf("None");
 }
-void common_hobbies(Graph g, int v1, int v2)//takes the boolean strings and \
+void common_hobbies(Graph g, int v1, int v2) //takes the boolean strings and \
                                             then uses AND operator to find the common hobbies
 {
 	int num1 = 0;
@@ -325,35 +324,35 @@ void common_hobbies(Graph g, int v1, int v2)//takes the boolean strings and \
 		num2 = num2 * 10 + g.Head[v1].hobbies[7 - i];
 	}
 	int ans = num1 & num2;
-	int count[8]={};
-	int k=0;
-	while(ans!=0)
+	int count[8] = {};
+	int k = 0;
+	while (ans != 0)
 	{
-		count[k]=ans%10;
-	    ans=ans/10;
-        k++;
-	} 
-	k=0;
+		count[k] = ans % 10;
+		ans = ans / 10;
+		k++;
+	}
+	k = 0;
 	printf("The hobbies in common are :\n");
-	for(int i=0;i<8;i++)
+	for (int i = 0; i < 8; i++)
 	{
-        if(count[i]==1)
+		if (count[i] == 1)
 		{
-             printf("%s\n", list_hobbies[i].hobby);
+			printf("%s\n", list_hobbies[i].hobby);
 			k++;
 		}
 	}
-	if(k==0)
-	printf("None\n");
+	if (k == 0)
+		printf("None\n");
 }
 void friendship_status(Graph g, int v1, int v2)
 {
-	int k=0;
-	k=CheckFriendshipStatus(g,v1,v2);
-	if(k)
+	int k = 0;
+	k = CheckFriendshipStatus(g, v1, v2);
+	if (k)
 	{
-            common_hobbies(g,v1,v2);
-	}	
+		common_hobbies(g, v1, v2);
+	}
 }
 void initialise() //all initalisation goes here
 {
@@ -368,107 +367,109 @@ void delete_user(Graph g, int id)
 }
 void user_login(Graph g)
 {
-    int user_id,user_choice;
-    scanf("%d",&user_id);
-    printf("\n\t Please Enter User ID\n");
-    //if the user id doesn't exist, It displays error message and terminates function
-    if(g.Head[user_id].userExistence==0)
-    {
-        printf("\n\t***  The USER ID entered is INVALID. You Don't Exist in our World :((  ***\n");
-        return;
-    }
-    if(strcmp(g.Head[user_id].password,encrypt_pass(&g.Head[user_id]))==0)
-    {
-        printf("\n\t1)\tAdd Friends (YAY ;P)\n\t2)\tRemove Friend (ono)\n\t3)\tCheck Friendlist :p\n");
-        printf("\t4)\tLook-up User ID :o\n\t5)\tCheck Recommendations ;)\n\t6)\tLOG OUT :// \n\t7)\tDelete Account  :???\n");
-        do
-        {
-            switch(user_choice)
-            {
-                case 1:
-                {
-                    int new_frnd;   //  Take user_id of friend-to-be
-                    scanf("%d",&new_frnd);
-                    if(g.Head[new_frnd].userExistence==0)
-                    {
-                        printf("\n\t***  The User ID doesn't exist. Imaginary Friends FTW !  ***\n");
-                    }
-                    else
-                    {
-                        StartFollowing(g,user_id,new_frnd);//Adds friend
-                        printf("\n\tYAY You have a NEW Friend XD\n");
-                    }
-                    break;
-                }
-                case 2:
-                {
-                    int no_more_frnd;
-                    scanf("%d",&no_more_frnd);
-                    if(g.Head[no_more_frnd].userExistence==0)
-                    {
-                        printf("\n\t***  The USER ID doesn't exist. Fighting with your Imagiinary Friends again?  ***\n");
-                    }
-                    else
-                    {
-                        //Unfriend(g,user_id,no_more_frnd);   //  Removes Friend
-                        printf("\n\tUnfriended Successfully !!\n");
-                    }
-                    break;
-                }
-                case 3:
-                {
-                    //checkFriendlist(g,user_id);
-                    break;
-                }
-                case 4:
-                {
-                    int look_user;   //  Take user_id of user to look up
-                    scanf("%d",&look_user);
-                    if(g.Head[look_user].userExistence==0)
-                    {
-                        printf("\n\t***  The User ID doesn't exist. File a Missing Persons Report !?  ***\n");
-                    }
-                    else
-                    {
-                        LookUpUser(g,user_id,look_user); //  Displays details
-                    }
-                    break;
-                }
-		case 5:
+	int user_id, user_choice;
+	printf("\n\t Please Enter User ID\n");
+	scanf("%d", &user_id);
+	//if the user id doesn't exist, It displays error message and terminates function
+	if (g.Head[user_id].userExistence == 0)
+	{
+		printf("\n\t***  The USER ID entered is INVALID. You Don't Exist in our World :((  ***\n");
+		return;
+	}
+	if (strcmp(g.Head[user_id].password, encrypt_pass(&g.Head[user_id])) == 0)
+	{
+
+		do
 		{
-		    //displays recommendations
-		    recommendations(g,user_id);
-		    break;
-		}			    
-                case 6:
-                {
-                    // logs-out user and terminates function
-                    printf("\n\t***  LOG-OUT SUCCESSFUL ! See You On The Other Side  ***\n");
-                    return;
-                    break;
-                }
-                case 7:
-                {
-                    // deletes user
-                    delete_user(g,user_id);
-                    return;
-                    break;
-                }
-                default:
-                {
-                    printf("\n Blurry Vision? Time to visit an Optometrist? Or some Coffee?\n\n");
-                    break;
-                }
-            }
-        }while(user_choice!=7 || user_choice!=6);
-    }
-    //if the password is incorrect, access is denied and function is terminated
-    else
-    {
-        printf("\n\t*** The Password is INCORRECT !! You looking for Trouble? Or Almonds? ***");
-        return;
-    }
-    return;
+			printf("\n\t1)\tAdd Friends (YAY ;P)\n\t2)\tRemove Friend (ono)\n\t3)\tCheck Friendlist :p\n");
+			printf("\t4)\tLook-up User ID :o\n\t5)\tCheck Recommendations ;)\n\t6)\tLOG OUT :// \n\t7)\tDelete Account  :???\n");
+			scanf("%d", &user_choice);
+			switch (user_choice)
+			{
+			case 1:
+			{
+				int new_frnd; //  Take user_id of friend-to-be
+				scanf("%d", &new_frnd);
+				if (g.Head[new_frnd].userExistence == 0)
+				{
+					printf("\n\t***  The User ID doesn't exist. Imaginary Friends FTW !  ***\n");
+				}
+				else
+				{
+					StartFollowing(g, user_id, new_frnd); //Adds friend
+					printf("\n\tYAY You have a NEW Friend XD\n");
+				}
+				break;
+			}
+			case 2:
+			{
+				int no_more_frnd;
+				scanf("%d", &no_more_frnd);
+				if (g.Head[no_more_frnd].userExistence == 0)
+				{
+					printf("\n\t***  The USER ID doesn't exist. Fighting with your Imagiinary Friends again?  ***\n");
+				}
+				else
+				{
+					//Unfriend(g,user_id,no_more_frnd);   //  Removes Friend
+					printf("\n\tUnfriended Successfully !!\n");
+				}
+				break;
+			}
+			case 3:
+			{
+				// checkFriendlist(g,user_id);
+				break;
+			}
+			case 4:
+			{
+				int look_user; //  Take user_id of user to look up
+				scanf("%d", &look_user);
+				if (g.Head[look_user].userExistence == 0)
+				{
+					printf("\n\t***  The User ID doesn't exist. File a Missing Persons Report !?  ***\n");
+				}
+				else
+				{
+					LookUpUser(g, user_id, look_user); //  Displays details
+				}
+				break;
+			}
+			case 5:
+			{
+				//displays recommendations
+				recommendations(g, user_id);
+				break;
+			}
+			case 6:
+			{
+				// logs-out user and terminates function
+				printf("\n\t***  LOG-OUT SUCCESSFUL ! See You On The Other Side  ***\n");
+				return;
+				break;
+			}
+			case 7:
+			{
+				// deletes user
+				delete_user(g, user_id);
+				return;
+				break;
+			}
+			default:
+			{
+				printf("\n Blurry Vision? Time to visit an Optometrist? Or some Coffee?\n\n");
+				break;
+			}
+			}
+		} while (user_choice != 7 || user_choice != 6);
+	}
+	//if the password is incorrect, access is denied and function is terminated
+	else
+	{
+		printf("\n\t*** The Password is INCORRECT !! You looking for Trouble? Or Almonds? ***");
+		return;
+	}
+	return;
 }
 /*
 int main()

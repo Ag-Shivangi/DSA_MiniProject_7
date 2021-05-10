@@ -9,7 +9,7 @@ char * encrypt_pass(GraphNode* user_node)
     salt[6] = user_node->city[0];
     salt[7] = user_node->city[1];
     salt[9] = user_node->name[3];
-    char *password;
+    char *password = user_node->password;
     /*************************************************************************************************
     * The salt :
     *
@@ -20,6 +20,6 @@ char * encrypt_pass(GraphNode* user_node)
     * The next character is the 4th letter of their name
     **************************************************************************************************/
     // Read in the user's password and encrypt it.
-    password = crypt(getpass("Password:"), salt);
+    // password = crypt(getpass("Password:"), salt);
     return (password);
 }
