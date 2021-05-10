@@ -1,7 +1,4 @@
 # DSA_MiniProject_7
-<<<<<<< HEAD
-
-=======
 **************************************************************************************************************
                       FRIEND RECOMMENDATION SYSTEM
 **************************************************************************************************************
@@ -38,6 +35,8 @@ Enter an integer according to your choice. If you Enter
 
 1. The program asks you for user information and registers user in the system.
    The following details are asked: name,city,birthday, password and hobbies.
+   The name has to be atleast 4 characters and a maximum of 29 characters. 
+   The city has to be atleast 2 characters and a maximum of 29 characters.
    The program returns an user ID.
    (The data is stored in a dynamic array and the password is encrypted using MD5 algorithm and stored)
 
