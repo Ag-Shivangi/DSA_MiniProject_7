@@ -103,15 +103,14 @@ int BinarySearch(int* arr, int low, int high, int find){
 	return -1;
 }
 int CheckFriendshipStatus(Graph g, int v1, int v2){
-        if(g.Head[v1].userExistence && 	g.Head[v2].userExistence)
-	{
-	int check = BinarySearch(g.Head[v1].parent, 0, g.Head[v1].numEdges-1, v2);
+    if(g.Head[v1].userExistence && 	g.Head[v2].userExistence){
+		int check = BinarySearch(g.Head[v1].parent, 0, g.Head[v1].numEdges-1, v2);
 
-	if(check==-1)
-		return 0;
-	else 
-		return 1;
-         }
+		if(check==-1)
+			return 0;
+		else 
+			return 1;
+    }
 }
 
 int* DjikstraAlgo(Graph g, GraphNode ref){
@@ -280,4 +279,12 @@ void RemoveEdge(Graph g, int v1, int v2){	//v2 is removed from follow list of v1
 		for(int j=index+1;j<g.Head[v1].numEdges;j++)
 			g.Head[v1].parent[j-1] = g.Head[v1].parent[j];  
 
+}
+
+void PrintFriendList(Graph g, int v1){
+	for(int i=0;i<g.Head[v1].numEdges;i++){
+		//display_details(g, g.Head[v1].parent[i].vertexID);
+		LookUpUser(g, v1, g.Head[v1].parent[i]);
+		printf("\n");
+	}	
 }

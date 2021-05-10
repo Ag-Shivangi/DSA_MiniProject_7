@@ -314,7 +314,7 @@ void recommendations(Graph g, int id) //function that returns the recommended fr
 void display_details(Graph g, int userID)
 {
 	printf("Name is %s\n", g.Head[userID].name);
-	printf("City of location of user: %s", g.Head[userID].city);
+	printf("City of location of user: %s\n", g.Head[userID].city);
 	int flag = 0;
 	printf("Hobbies : ");
 	for (int i = 0; i < 8; i++)
@@ -325,42 +325,55 @@ void display_details(Graph g, int userID)
 		}
 
 	if (!flag)
-		printf("None");
+		printf("None\n");
+	else	
+		printf("\n");
 }
 void common_hobbies(Graph g, int v1, int v2) //takes the boolean strings and \
                                             then uses AND operator to find the common hobbies
 {
-	int num1 = 0;
-	fo(i, 8)
-	{
-		num1 = num1 * 10 + g.Head[v1].hobbies[7 - i];
-	}
-	int num2 = 0;
-	fo(i, 8)
-	{
-		num2 = num2 * 10 + g.Head[v1].hobbies[7 - i];
-	}
-	int ans = num1 & num2;
-	int count[8] = {};
-	int k = 0;
-	while (ans != 0)
-	{
-		count[k] = ans % 10;
-		ans = ans / 10;
-		k++;
-	}
-	k = 0;
-	printf("The hobbies in common are :\n");
-	for (int i = 0; i < 8; i++)
-	{
-		if (count[i] == 1)
-		{
-			printf("%s\n", list_hobbies[i].hobby);
-			k++;
+	// int num1 = 0;
+	// fo(i, 8)
+	// {
+	// 	num1 = num1 * 10 + g.Head[v1].hobbies[7 - i];
+	// }
+	// int num2 = 0;
+	// fo(i, 8)
+	// {
+	// 	num2 = num2 * 10 + g.Head[v2].hobbies[7 - i];
+	// }
+	// int ans = num1 & num2;
+	// int count[8] = {};
+	// int k = 0;
+	// while (ans != 0)
+	// {
+	// 	count[k] = ans % 10;
+	// 	ans = ans / 10;
+	// 	k++;
+	// }
+	// k = 0;
+	// printf("The hobbies in common are :\n");
+	// for (int i = 0; i < 8; i++)
+	// {
+	// 	if (count[i] == 1)
+	// 	{
+	// 		printf("%s\n", list_hobbies[i].hobby);
+	// 		k++;
+	// 	}
+	// }
+	// if (k == 0)
+	// 	printf("None\n");
+	int flag = 0;
+	printf("Common Hobbies : ");
+	for(int i=0;i<8;i++){
+		if(g.Head[v1].hobbies[i]&&g.Head[v2].hobbies[i]){
+			printf("%s ", list_hobbies[i].hobby);
+			flag = 1;
 		}
 	}
-	if (k == 0)
-		printf("None\n");
+
+	if(!flag)
+		printf("Unfortunately none in common.");
 }
 void friendship_status(Graph g, int v1, int v2)
 {
@@ -413,6 +426,9 @@ void user_login(Graph g)
 				}
 				else
 				{
+					if(CheckFriendshipStatus(g, user_id, new_frnd)){
+						printf("sorry! we don't support multiple personality disorder :(");						
+					}
 					StartFollowing(g, user_id, new_frnd); //Adds friend
 					printf("\n\tYAY You have a NEW Friend XD\n");
 				}
@@ -429,6 +445,7 @@ void user_login(Graph g)
 				else
 				{
 					//Unfriend(g,user_id,no_more_frnd);   //  Removes Friend
+					RemoveEdge(g, user_id, no_more_frnd);
 					printf("\n\tUnfriended Successfully !!\n");
 				}
 				break;
@@ -436,6 +453,8 @@ void user_login(Graph g)
 			case 3:
 			{
 				// checkFriendlist(g,user_id);
+
+				PrintFriendList(g, user_id);
 				break;
 			}
 			case 4:

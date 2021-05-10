@@ -35,7 +35,10 @@ int main()
             int v1,v2;
             scanf("%d",&v1); // takes id of first user
             scanf("%d",&v2); // takes id of second user
-            friendship_status(graph,v1,v2);
+            if(CheckFriendshipStatus(graph,v1,v2))
+                printf("");
+            else
+                printf("");
             break;
         }
         case 4:

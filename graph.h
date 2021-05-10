@@ -47,4 +47,5 @@ void LookUpUser(Graph g, int currID, int userID);
 void RemoveEdge(Graph g, int v1, int v2);//v2 is removed from follow list of v1, as in v1 is not following v2 anymore
 int BinarySearch(int* arr, int low, int high, int find);
 int CheckFriendshipStatus(Graph g, int v1, int v2);
+void PrintFriendList(Graph g, int v1);
 #endif
