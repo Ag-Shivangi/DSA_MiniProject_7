@@ -159,11 +159,20 @@ int hobby_recommend(Graph g, int id, int arr[], int number)
 			point = point->next;
 		}
 	}
-	int tn = 8 - n;
+	int tn = 0; //=8 - n;
+	
+	for (int i = 0; i < 8; i++)
+	{
+		if (g.Head[id].hobbies[i] == 1)
+			tn++;
+	}
+	
 	if (number < 10)
 	{
 		for (int zi = pow(2, tn) - 2; zi >= 0; zi--)
 		{
+			for(int ko=0;ko<pow(2, n);ko++)
+			{
 			fo(i, 8)
 				temp[i] = g.Head[id].hobbies[i]; //copies the main boolen string
 			int j = 0, m = zi, k = 0;
@@ -177,13 +186,18 @@ int hobby_recommend(Graph g, int id, int arr[], int number)
 				k++;
 			}
 			k = 0;
+			int x =0;
 			fo(i, 8) //finds the permuted binary string
 			{
-				if (temp[i] == 1)
+				if (temp[i] == 1){
 					temp[i] = count[k];
-				else
-					temp[i] = store[zi].count[k];
-				k++;
+					k++;
+				}
+				else{
+					temp[i] = store[ko].count[x];
+					x++;
+				}
+				
 			}
 			int num = 0;
 			fo(i, 8) //finds the value in decimal after permutation
@@ -198,6 +212,7 @@ int hobby_recommend(Graph g, int id, int arr[], int number)
 					break;
 				number++;
 				point = point->next;
+			}
 			}
 		}
 	}
