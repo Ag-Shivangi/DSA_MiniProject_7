@@ -515,7 +515,7 @@ void user_login(Graph g)
 	//if the password is incorrect, access is denied and function is terminated
 	else
 	{
-		printf("\n\t*** The Password is INCORRECT !! You looking for Trouble? Or Almonds? ***");
+		printf("\n\t*** The Password is INCORRECT !! You looking for Trouble? Or Almonds? ***\n");
 		return;
 	}
 	return;
