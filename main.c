@@ -38,7 +38,7 @@ int main()
             if(CheckFriendshipStatus(graph,v1,v2))
                 printf("The user is your friend! Shouldn't you already be knowing that !?");
             else
-                printf("Nope.");
+                printf("The user is not your friend.Need more friends? Maybe we can help!");
             break;
         }
         case 4:

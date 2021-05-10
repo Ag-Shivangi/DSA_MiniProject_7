@@ -172,7 +172,7 @@ int hobby_recommend(Graph g, int id, int arr[], int number)
 	{
 		for (int zi = pow(2, tn) - 2; zi >= 0; zi--)
 		{
-			for(int ko=0;ko<pow(2, n);ko++)
+			for(int ko=pow(2, n)-1;ko>=0;ko--)
 			{
 			fo(i, 8)
 				temp[i] = g.Head[id].hobbies[i]; //copies the main boolen string
@@ -430,7 +430,7 @@ void user_login(Graph g)
 				else
 				{
 					if(CheckFriendshipStatus(g, user_id, new_frnd)){
-						printf("The user is your friend! Shouldn't you already be knowing that !?");						
+						printf("sorry! we don't support multiple personality disorder :(");						
 					}
 					StartFollowing(g, user_id, new_frnd); //Adds friend
 					printf("\n\tYAY You have a NEW Friend XD\n");
