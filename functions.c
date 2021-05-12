@@ -148,7 +148,7 @@ int hobby_recommend(Graph g, int id, int arr[], int number)
 		ad_node *point = hobby_graph->array[num].head;
 		while (point != NULL)
 		{
-			if (CheckFriendshipStatus(g, id, point->vertex))
+			if (!CheckFriendshipStatus(g, id, point->vertex))
 			{
 				if (point->vertex != id)
 				{
@@ -219,7 +219,7 @@ int hobby_recommend(Graph g, int id, int arr[], int number)
 				ad_node *point = hobby_graph->array[num].head;
 				while (point != NULL)
 				{
-					if (CheckFriendshipStatus(g, id, point->vertex))
+					if (!CheckFriendshipStatus(g, id, point->vertex))
 					{
 						int flag = 1;
 						fo(po, number)

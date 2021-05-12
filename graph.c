@@ -171,9 +171,9 @@ void DeleteVertex(Graph g, int vertex){
 			}
 		}
 
-		if(index!=-1)	//and shiftsd the array back
+		if(index!=-1){	//and shiftsd the array back
 			for(int j=index+1;j<g.Head[i].numEdges;j++)
-				g.Head[i].parent[j-1] = g.Head[i].parent[j];  
+				g.Head[i].parent[j-1] = g.Head[i].parent[j];	g.Head[i].numEdges--;}	
 	}
 	
 	free(g.Head[vertex].EdgeLen);
@@ -286,9 +286,9 @@ void RemoveEdge(Graph g, int v1, int v2){	//v2 is removed from follow list of v1
 		}
 	}
 
-	if(index!=-1)
+	if(index!=-1){
 		for(int j=index+1;j<g.Head[v1].numEdges;j++)
-			g.Head[v1].parent[j-1] = g.Head[v1].parent[j];  
+			g.Head[v1].parent[j-1] = g.Head[v1].parent[j];	g.Head[v1].numEdges--;}  
 
 }
 
